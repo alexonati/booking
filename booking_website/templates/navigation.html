@@ -1,0 +1,18 @@
+<nav style="display: flex; justify-content: space-between">
+    <div>
+        <a href="/">Homepage</a>
+        <a href="{% url 'products:all_products' %}">Products</a>
+        <a href="{% url 'stores:all_stores' %}">Stores</a>
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+            {% if user.is_staff %}
+                <a href={% url 'admin:index' %}>Admin</a>
+            {% endif %}
+            <a href="{% url 'users:logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'users:login' %}">Login</a>
+            <a href="{% url 'users:register' %}">Register</a>
+        {% endif %}
+    </div>
+</nav>

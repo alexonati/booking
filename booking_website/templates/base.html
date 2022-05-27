@@ -1,0 +1,35 @@
+{% load static %}
+
+<html>
+<head>
+    <title>{% block page_title %}{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        header {
+            background-color: #eee;
+            border-bottom: 1px solid #aaa;
+            padding: 20px 20px;
+        }
+
+        main {
+            padding: 20px 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div>
+        <img src="{% static 'images/marketLogo.jpg' %}" width="50"/>
+    </div>
+    <div>
+        {% include 'navigation.html' %}
+    </div>
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>
