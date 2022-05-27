@@ -3,20 +3,8 @@ from django.db import models
 
 
 # Create your models here.
-class User(models.Model):
-    name = models.CharField()
-    booking_id = models.ForeignKey("BookingReview",
-                                   on_delete=models.SET_NULL,
-                                   null=True,
-                                   default=None,
-                                   related_name='bookings')
-    user_account_email = models.CharField()
-    user_password = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    profile_image = models.ImageField()
-    card_no = models.IntegerField(max_length=16)
-
-
 class Booking(models.Model):
+    user_id = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time = models.DateTimeField()
     table_id = models.ForeignKey("Table",
                                  on_delete=models.SET_NULL,
@@ -28,33 +16,8 @@ class Booking(models.Model):
                                            null=True,
                                            default=None,
                                            related_name='bookingfee')
-
-    user_id = models.ForeignKey(User, on_delete=models.SET_NULL,
-                                null=True,
-                                default=None,
-                                related_name='users')
     QR_code = models.ImageField()
-    card_no = models.ForeignKey(User, on_delete=models.SET_NULL,
-                                null=True,
-                                default=None,
-                                related_name='cardno')
-
-
-class Restaurant(models.Model):
-    name = models.CharField()
-    description = models.CharField()
-    review_id = models.ForeignKey("BookingReview", on_delete=models.SET_NULL,
-                                  null=True,
-                                  default=None,
-                                  related_name='reviews')
-    owner_password = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    restaurant_account_email = models.CharField()
-    booking_id = models.ForeignKey(Booking, on_delete=models.SET_NULL,
-                                   null=True,
-                                   default=None,
-                                   related_name='reviews')
-    logo_image = models.ImageField()
-    subscription_fee_amount = models.IntegerField()
+    card_no = models.IntegerField()
 
 
 class RestaurantFees(models.Model):
@@ -62,12 +25,34 @@ class RestaurantFees(models.Model):
     amount = models.IntegerField()
 
 
+class Restaurant(models.Model):
+    name = models.CharField(max_length=128, unique=True, null=False, blank=False)
+    description = models.CharField(max_length=128, unique=True, null=False, blank=False)
+    review_id = models.ForeignKey("BookingReview", on_delete=models.SET_NULL,
+                                  null=True,
+                                  default=None,
+                                  related_name='reviews')
+    owner_password = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    restaurant_account_email = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='restaurantemail')
+    booking_id = models.ForeignKey(Booking, on_delete=models.SET_NULL,
+                                   null=True,
+                                   default=None,
+                                   related_name='reviews')
+    logo = models.ImageField(upload_to='restaurants/', null=True, default=None)
+    subscription_fee_level = models.ForeignKey(RestaurantFees,
+                                               on_delete=models.CASCADE,
+                                               null=True,
+                                               default=None,
+                                               related_name='subscription'
+                                               )
+
+
 class Table(models.Model):
     restaurant_id = models.ForeignKey(Restaurant,
                                       on_delete=models.SET_NULL,
                                       null=True,
                                       default=None,
-                                      related_name='restaurant')
+                                      related_name='tables')
     seats_number = models.IntegerField()
 
 
@@ -77,12 +62,7 @@ class BookingFee(models.Model):
 
 
 class BookingReview(models.Model):
-    user_id = models.ForeignKey(User,
-                                on_delete=models.SET_NULL,
-                                null=True,
-                                default=None,
-                                related_name='user')
-
+    user_id = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     review_text = models.TextField()
     booking_id = models.ForeignKey(Booking,
                                    on_delete=models.SET_NULL,
