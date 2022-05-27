@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Create new account</h1>
-    <form method="post" action="{% url 'users:register' %}">
+    <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Register" />

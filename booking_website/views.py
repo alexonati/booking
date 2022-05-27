@@ -20,7 +20,7 @@ def login_view(request):
             login(request, user)
             return redirect(reverse('users:profile'))
 
-    return render(request, 'users/login.html')
+    return render(request, 'login.html')
 
 
 def register_view(request):
@@ -34,7 +34,7 @@ def register_view(request):
             # login(request, user)
             # return redirect(reverse('users:profile'))
 
-    return render(request, 'users/register.html', {
+    return render(request, 'register.html', {
         'form': form
     })
 
