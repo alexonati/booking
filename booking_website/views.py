@@ -7,7 +7,7 @@ from booking_website.forms import RegisterForm
 
 
 def homepage(request):
-    return render(request, 'homepage.html')
+    return render(request, 'landing_page.html')
 
 
 def login_view(request):

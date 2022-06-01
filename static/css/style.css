@@ -1,0 +1,36 @@
+.section{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.section main {
+    z-index: 1;
+}
+
+.first {
+    font-size: 300%;
+    font-weight: bold;
+    background-color: black;
+    opacity: 0.8;
+}
+
+.space {
+    padding: 85px;
+}
+.book {
+    font-size: 24px;
+    padding: 14px 40px;
+}
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
