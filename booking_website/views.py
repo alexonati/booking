@@ -2,7 +2,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, HttpResponse
-
 from booking_website.forms import RegisterForm
 
 
@@ -31,8 +30,8 @@ def register_view(request):
 
         if form.is_valid():
             user = form.save()
-            # login(request, user)
-            # return redirect(reverse('users:profile'))
+            login(request, user)
+            return redirect(reverse('users:profile'))
 
     return render(request, 'register.html', {
         'form': form
