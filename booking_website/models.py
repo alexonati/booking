@@ -4,9 +4,9 @@ from django.db import models
 
 # Create your models here.
 class Booking(models.Model):
-    user_id = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time = models.DateTimeField()
-    table_id = models.ForeignKey("Table",
+    table = models.ForeignKey("Table",
                                  on_delete=models.SET_NULL,
                                  null=True,
                                  default=None,
@@ -28,13 +28,13 @@ class RestaurantFees(models.Model):
 class Restaurant(models.Model):
     name = models.CharField(max_length=128, unique=True, null=False, blank=False)
     description = models.CharField(max_length=128, unique=True, null=False, blank=False)
-    review_id = models.ForeignKey("BookingReview", on_delete=models.SET_NULL,
+    review = models.ForeignKey("BookingReview", on_delete=models.SET_NULL,
                                   null=True,
                                   default=None,
                                   related_name='reviews')
     owner_password = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     restaurant_account_email = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='restaurantemail')
-    booking_id = models.ForeignKey(Booking, on_delete=models.SET_NULL,
+    booking = models.ForeignKey(Booking, on_delete=models.SET_NULL,
                                    null=True,
                                    default=None,
                                    related_name='reviews')
@@ -48,7 +48,7 @@ class Restaurant(models.Model):
 
 
 class Table(models.Model):
-    restaurant_id = models.ForeignKey(Restaurant,
+    restaurant = models.ForeignKey(Restaurant,
                                       on_delete=models.SET_NULL,
                                       null=True,
                                       default=None,
@@ -62,15 +62,15 @@ class BookingFee(models.Model):
 
 
 class BookingReview(models.Model):
-    user_id = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     review_text = models.TextField()
-    booking_id = models.ForeignKey(Booking,
+    booking = models.ForeignKey(Booking,
                                    on_delete=models.SET_NULL,
                                    null=True,
                                    default=None,
                                    related_name='bookings')
 
-    restaurant_id = models.ForeignKey(Restaurant,
+    restaurant = models.ForeignKey(Restaurant,
                                       on_delete=models.SET_NULL,
                                       null=True,
                                       default=None,

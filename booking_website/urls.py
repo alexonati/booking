@@ -5,7 +5,7 @@ from booking_website.views import homepage, login_view, register_view, logout_vi
 
 urlpatterns = [
     path('', homepage, name='homepage'),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
     path('logout/', logout_view, name='logout'),

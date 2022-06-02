@@ -10,46 +10,34 @@
     <link href="..\..\static\css\style.css" rel="stylesheet">
 </head>
 <body class="d-flex h-100 text-center text-white bg-dark">
-
-
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column ">
-    <header class="mb-auto">
-        <div>
-            <button class="btn btn-dark float-md-start mb-0" type="button">
-                <h3 href="/">Dine2Day</h3>
-            </button>
-
-            <nav class="nav nav-masthead justify-content-center float-md-end">
-
-                {% if user.is_authenticated %}
-                {% if user.is_staff %}
-                <a aria-current="page" class="nav-link fw-bold py-1 px-2 active" href="{% url 'admin' %}">Admin</a>
-                {% endif %}
-                <a href="{% url 'logout' %}">Logout</a>
-                {% else %}
-                <a class="nav-link fw-bold py-1 px-2" href="{% url 'login' %}" style="margin-right: 2em">Login</a>
-                {% endif %}
-                <a class="nav-link fw-bold py-1 px-0" href="mailto:ioan.a.onati@gmail.com">Contact</a>
-            </nav>
-        </div>
-    </header>
-    <div class="section">
-        <div class="video-container">
-            <video autoplay loop muted playsinline style="height: 100vh; width: 100vv">
-                <source src="..\..\static\video\street.mp4">
-            </video>
-        </div>
-        <main class="px-3">
-            <p class="lead first">Want to enjoy a special experience while dining?</p>
-            <div class="space">
+<div class="cover-container d-flex w-100 h-100 p-0 mx-auto flex-column">
+    <div class="container header">
+        <div class="row">
+            <div class="col-lg-2">
+                <button class="btn btn-dark float-md-start mb-0" type="button">
+                    <h3>Dine2Day</h3>
+                </button>
             </div>
-            <p class="lead">
-                <a class="btn btn-primary book" href="{% url 'register' %}">Book a table now... </a>
-            </p>
-        </main>
-        <footer class="mt-auto text-white-50">
-        </footer>
+            <div class="col-sm-auto">
+
+            </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="video-container">
+                <video autoplay loop muted playsinline>
+                    <source src="..\..\static\video\video.mp4">
+                </video>
+            </div>
+            <main class="px-3">
+                <p class="lead first">Want to enjoy a special experience while dining?</p>
+                <div class="space">
+                </div>
+                <p class="lead">
+                    <a class="btn btn-primary book" href="{% url 'register' %}">Book a table now... </a>
+                </p>
+            </main>
+        </div>
     </div>
-</div>
 </body>
 </html>

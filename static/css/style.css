@@ -1,4 +1,27 @@
-.section{
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-group{
+    margin-left: 100px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+video{
+    width: 100%;
+    height: 100%;
+}
+
+.section {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -7,6 +30,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    padding: 0;
 }
 
 .section main {
@@ -18,19 +42,15 @@
     font-weight: bold;
     background-color: black;
     opacity: 0.8;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
 }
 
 .space {
     padding: 85px;
 }
+
 .book {
     font-size: 24px;
     padding: 14px 40px;
 }
 
-.video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
