@@ -17,7 +17,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect(reverse('users:profile'))
+            return redirect(reverse('profile'))
 
     return render(request, 'login.html')
 
@@ -31,7 +31,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect(reverse('users:profile'))
+            return redirect(reverse('profile'))
 
     return render(request, 'register.html', {
         'form': form
@@ -45,9 +45,4 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    # if request.user.is_authenticated:
-    #     return HttpResponse('This is the profile route.')
-    #
-    # return redirect(reverse('users:login'))
-
     return HttpResponse('This is the profile route.')

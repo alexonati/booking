@@ -1,6 +1,9 @@
 from django import forms
+from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 AuthUser = get_user_model()
 
@@ -16,6 +19,10 @@ class RegisterForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.fields['is_staff'].label = "Restaurant Account"
+        self.helper = FormHelper(self)
+        self.helper.form_action = reverse_lazy('register')
+        self.helper.form_method = 'POST'
+        self.helper.add_input(Submit('submit', 'Submit'))
 
     password = forms.CharField(
         max_length=128,
