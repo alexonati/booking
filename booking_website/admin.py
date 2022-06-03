@@ -11,7 +11,7 @@ class BookingAdmin(admin.ModelAdmin):
 
 @admin.register(BookingFee)
 class BookingFeeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'amount',)
+    list_display = ('level', 'amount',)
 
 
 @admin.register(BookingReview)
@@ -21,16 +21,21 @@ class BookingReviewAdmin(admin.ModelAdmin):
 
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin):
+
     @admin.display(description='Image')
     def image_html(self, obj):
         return format_html(f'<img src="{obj.image_url}" width="100" />')
 
-    list_display = ('name', 'description', 'image_html', 'subscription_fee_level')
+    @admin.display(description='Total bookings')
+    def bookings_number(self, obj):
+        return obj.bookings.count()
+
+    list_display = ('name', 'description', 'image_html', 'subscription_fee_level',)
 
 
 @admin.register(RestaurantFees)
 class RestaurantFeesAdmin(admin.ModelAdmin):
-    list_display = ('id', 'amount',)
+    list_display = ('level', 'amount',)
 
 
 @admin.register(Table)

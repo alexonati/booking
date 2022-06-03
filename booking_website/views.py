@@ -17,6 +17,8 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
+            if user.is_staff:
+                return redirect(reverse('admin:index'))
             return redirect(reverse('profile'))
 
     return render(request, 'login.html')
@@ -31,6 +33,8 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            if user.is_staff:
+                return redirect(reverse('admin:index'))
             return redirect(reverse('profile'))
 
     return render(request, 'register.html', {
@@ -45,4 +49,4 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    return HttpResponse('This is the profile route.')
+    return render(request, 'user_dashboard.html')

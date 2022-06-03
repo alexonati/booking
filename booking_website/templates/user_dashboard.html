@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid vh-100 ">
+        <div class="row" >
+            <div class="col-4 vh-100 position-static d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+                 style="width: 200px; position: sticky">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link active" href="#">
+                            <svg class="bi pe-none me-2" height="16" width="16">
+                                <use xlink:href="#home"/>
+                            </svg>
+                            Restaurants
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-white" href="#">
+                            <svg class="bi pe-none me-2" height="16" width="16">
+                                <use xlink:href="#speedometer2"/>
+                            </svg>
+                            Bookings
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-white" href="#">
+                            <svg class="bi pe-none me-2" height="16" width="16">
+                                <use xlink:href="#table"/>
+                            </svg>
+                            Reviews
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-white" href="#">
+                            <svg class="bi pe-none me-2" height="16" width="16">
+                                <use xlink:href="#grid"/>
+                            </svg>
+                            Edit Profile
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-8 vh-100 scroll" style="overflow-y: auto; height: 700px; margin: 20px;">
+                <h1>Body area</h1>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

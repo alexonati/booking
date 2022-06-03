@@ -13,12 +13,12 @@ class RegisterForm(forms.ModelForm):
         model = AuthUser
         fields = ['first_name', 'last_name', 'username', 'email', 'is_staff']
         help_texts = {
-            'is_staff': 'Only check this if you are a restaurant owner.',
+            'is_staff': 'Only check this if you are a restaurant business owner.',
         }
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
-        self.fields['is_staff'].label = "Restaurant Account"
+        self.fields['is_staff'].label = "Restaurant Business Account"
         self.helper = FormHelper(self)
         self.helper.form_action = reverse_lazy('register')
         self.helper.form_method = 'POST'
