@@ -1,52 +1,91 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}User Dashboard{% endblock %}
 
 {% block content %}
 
 <div class="container-fluid vh-100 ">
-        <div class="row" >
-            <div class="col-4 vh-100 position-static d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-                 style="width: 200px; position: sticky">
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <a aria-current="page" class="nav-link active" href="#">
-                            <svg class="bi pe-none me-2" height="16" width="16">
-                                <use xlink:href="#home"/>
-                            </svg>
-                            Restaurants
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link text-white" href="#">
-                            <svg class="bi pe-none me-2" height="16" width="16">
-                                <use xlink:href="#speedometer2"/>
-                            </svg>
-                            Bookings
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link text-white" href="#">
-                            <svg class="bi pe-none me-2" height="16" width="16">
-                                <use xlink:href="#table"/>
-                            </svg>
-                            Reviews
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link text-white" href="#">
-                            <svg class="bi pe-none me-2" height="16" width="16">
-                                <use xlink:href="#grid"/>
-                            </svg>
-                            Edit Profile
-                        </a>
-                    </li>
-                </ul>
+    <div class="row">
+        <div class="col-4 vh-100 position-static d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+             style="width: 200px; position: sticky ">
+            <ul class="nav nav-pills mb-3 flex-column mb-auto" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" role="tab" aria-selected="true" href="{% url 'user_dashboard_view' %}">
+                        <svg class="bi pe-none me-2" height="16" width="16">
+                            <use xlink:href="#speedometer2"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" role="tab" aria-selected="false"  href="{% url 'restaurants' %}">
+                        <svg class="bi pe-none me-2" height="16" width="16">
+                            <use xlink:href="#speedometer2"/>
+                        </svg>
+                        Restaurants
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" role="tab" aria-selected="false"  href="{% url 'bookings' %}">
+                        <svg class="bi pe-none me-2" height="16" width="16">
+                            <use xlink:href="#speedometer2"/>
+                        </svg>
+                        Bookings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" role="tab" aria-selected="false"  href="{% url 'reviews' %}">
+                        <svg class="bi pe-none me-2" height="16" width="16">
+                            <use xlink:href="#table"/>
+                        </svg>
+                        Reviews
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" role="tab" aria-selected="false"  href="{% url 'profile' %}">
+                        <svg class="bi pe-none me-2" height="16" width="16">
+                            <use xlink:href="#grid"/>
+                        </svg>
+                        Edit Profile
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-10 vh-100 scroll d-flex align-items-start justify-content-around"
+             style="overflow-y: auto; height: 700px; margin: 20px; border-radius: 10px;">
+            <div class="col-5">
+                {% if 'user_dashboard' in request.path %}
+                    {{ user.email }}
+                {% elif 'restaurants' in request.path %}
+                <ul>
+                {% for restaurant in restaurants %}
+                <li>
+                    {{restaurant.name}}
+                </li>
+                {% endfor %}
+                {% elif 'bookings' in request.path %}
+                {% for booking in bookings %}
+                <li>
+                    {{booking.id}}
+                </li>
+                {% endfor %}
+                {% elif 'reviews' in request.path %}
+                {% for review in reviews %}
+                <li>
+                    {{review.id}}
+                </li>
+                {% endfor %}
+                {% elif 'profile' in request.path %}
+                {% csrf_token %}
+                <h1>Edit Profile</h1>
+                {% crispy form %}
+                {% endif %}
+            </ul>
             </div>
-            <div class="col-8 vh-100 scroll" style="overflow-y: auto; height: 700px; margin: 20px;">
-                <h1>Body area</h1>
+            <div class="col-5">
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
