@@ -1,22 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from booking_website.models import Booking, Restaurant, BookingFee, BookingReview, Table, RestaurantFees
-
-
-# Register your models here.
-@admin.register(Booking)
-class BookingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'time', 'table',)
-
-
-@admin.register(BookingFee)
-class BookingFeeAdmin(admin.ModelAdmin):
-    list_display = ('level', 'amount',)
-
-
-@admin.register(BookingReview)
-class BookingReviewAdmin(admin.ModelAdmin):
-    list_display = ('id', 'review_text', 'restaurant', 'user',)
+from booking_website.models import Restaurant, Table, RestaurantFees
 
 
 @admin.register(Restaurant)
@@ -30,7 +14,21 @@ class RestaurantAdmin(admin.ModelAdmin):
     def bookings_number(self, obj):
         return obj.bookings.count()
 
+    readonly_fields = ('subscription_fee_level',)
+
+    @admin.display(description='Subscription Fee Level')
+    def subscription_fee_level(self, obj):
+        return obj.subscription
+
     list_display = ('name', 'description', 'image_html', 'subscription_fee_level',)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+
+        if not request.user.is_superuser:
+            queryset = queryset.filter(restaurant_owner=request.user)
+
+        return queryset
 
 
 @admin.register(RestaurantFees)
@@ -41,3 +39,11 @@ class RestaurantFeesAdmin(admin.ModelAdmin):
 @admin.register(Table)
 class RestaurantTableAdmin(admin.ModelAdmin):
     list_display = ('id', 'restaurant', 'seats_number',)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+
+        if not request.user.is_superuser:
+            queryset = queryset.filter(restaurant_id=request.user.id)
+
+        return queryset

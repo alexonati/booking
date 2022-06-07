@@ -1,0 +1,2 @@
+from booking_website.admin.booking import BookingAdmin, BookingReviewAdmin, BookingFeeAdmin
+from booking_website.admin.restaurant import RestaurantAdmin, RestaurantFeesAdmin, RestaurantTableAdmin

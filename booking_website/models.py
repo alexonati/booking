@@ -7,6 +7,11 @@ from django.templatetags.static import static
 class Booking(models.Model):
     user = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time = models.DateTimeField()
+    restaurant = models.ForeignKey("Restaurant",on_delete=models.SET_NULL,
+                                           null=True,
+                                           default=None,
+                                           blank=True,
+                                           related_name='booking_restaurant')
     table = models.ForeignKey("Table",
                               on_delete=models.SET_NULL,
                               null=True,
@@ -14,7 +19,7 @@ class Booking(models.Model):
                               blank=True,
                               related_name='tables')
     participants = models.IntegerField()
-    booking_fee_amount = models.ForeignKey("BookingFee", on_delete=models.SET_NULL,
+    booking_fee_level = models.ForeignKey("BookingFee", on_delete=models.SET_NULL,
                                            null=True,
                                            default=None,
                                            blank=True,
