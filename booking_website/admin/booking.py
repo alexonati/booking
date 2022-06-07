@@ -12,7 +12,7 @@ class BookingAdmin(admin.ModelAdmin):
 
     @admin.display(description='Booking Fee Level')
     def booking_fee_level(self, obj):
-        return obj.subscription_fee_level
+        return obj.booking_fee_level
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

@@ -5,8 +5,10 @@ from booking_website.models import Restaurant, Table, RestaurantFees
 
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'image_html', 'restaurant_website_link', 'subscription_fee_level',)
+    list_display = ('name', 'description', 'image_html', 'restaurant_website_link', 'subscription_fee_level_string',)
     readonly_fields = ('subscription_fee_level',)
+    fieldsets = ((None, {
+        'fields': ('name', 'description', 'image', 'restaurant_website_link', 'subscription_fee_level_string',)}),)
 
     @admin.display(description='Image')
     def image_html(self, obj):
@@ -17,8 +19,8 @@ class RestaurantAdmin(admin.ModelAdmin):
         return obj.bookings.count()
 
     @admin.display(description='Subscription Fee Level')
-    def subscription_fee_level(self, obj):
-        return obj.subscription
+    def subscription_fee_level_string(self, obj):
+        return obj.subscription_fee_level
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
