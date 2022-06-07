@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th class="col-1" scope="col">Booking time</th>
+            <th class="col-2" scope="col">Restaurant</th>
+            <th class="col-1" scope="col">Table</th>
+            <th class="col-1" scope="col">Participants</th>
+            <th class="col-1" scope="col">Fee Level</th>
+            <th class="col-2" scope="col">OR_code</th>
+            <th class="col-2" scope="col">Card Number</th>
+            <th class="col-2" scope="col">Review</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for booking in bookings %}
+            <td>{{booking.time}}</td>
+            <td>{{booking.restaurant}}></td>
+            <td>{{booking.table}}</td>
+            <td>{{booking.participants}}</td>
+            <td>{{booking.fee_level}}</td>
+            <td>{{booking.QR_code}}</td>
+            <td>{{booking.card_no}}</td>
+            <td class="align-middle text-center"><button type="button" class="btn btn-info">Book</button></td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

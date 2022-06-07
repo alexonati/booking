@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 
 from booking_website.views import homepage, login_view, register_view, logout_view, login_or_register_view, \
-    get_all_restaurants, user_dashboard_view, get_all_bookings, get_all_reviews, edit_profile
+    get_all_restaurants, get_all_bookings, get_all_reviews, edit_profile, user_dashboard_view
 
 urlpatterns = [
     path('', homepage, name='homepage'),

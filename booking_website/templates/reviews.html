@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th class="col-2" scope="col">Booking ID</th>
+            <th class="col-6" scope="col">Text</th>
+            <th class="col-2" scope="col">Restaurant</th>
+            <th class="col-2" scope="col">Delete Review</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for review in reviews %}
+            <td>{{booking.id}}</td>
+            <td>{{review.text}}></td>
+            <td>{{review.restaurant}}</td>
+            <td class="align-middle text-center"><button type="button" class="btn btn-danger">Delete</button></td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

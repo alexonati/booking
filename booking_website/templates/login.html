@@ -4,18 +4,18 @@
 {% block title %}Login page{% endblock %}
 
 {% block content %}
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <div>
-            <label>Username</label>
-            <input type="text" name="username" />
-        </div>
-        <div>
-            <label>
-                Password
-            </label>
-            <input type="password" name="password" />
-        </div>
-        <input type="submit" value="Login" />
-    </form>
+<form class="p-5" action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label" for="exampleInputEmail1">Email address (please use the signup username for the time being)</label>
+        <input aria-describedby="emailHelp" class="form-control" id="exampleInputEmail1" name="username" type="text">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="exampleInputPassword1">Password</label>
+        <input class="form-control" id="exampleInputPassword1" name="password" type="password">
+    </div>
+
+    <button class="btn btn-primary" type="submit" value="Login">Submit</button>
+
+</form>
 {% endblock %}

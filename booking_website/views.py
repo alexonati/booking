@@ -40,7 +40,7 @@ def register_view(request):
             login(request, user)
             if user.is_staff:
                 return redirect(reverse('admin:index'))
-            return redirect(reverse('profile'))
+            return redirect(reverse('dashboard.html'))
 
     return render(request, 'register.html', {
         'form': form
@@ -54,7 +54,7 @@ def logout_view(request):
 
 @login_required
 def user_dashboard_view(request):
-    return render(request, 'user_dashboard.html')
+    return render(request, 'dashboard.html')
 
 
 def edit_profile(request):
@@ -70,7 +70,7 @@ def edit_profile(request):
                 return redirect(reverse('admin:index'))
             return redirect(reverse('profile'))
 
-    return render(request, 'user_dashboard.html', {
+    return render(request, 'dashboard.html', {
         'form': form
     })
 
@@ -78,7 +78,7 @@ def edit_profile(request):
 def get_all_restaurants(request):
     restaurants = Restaurant.objects.all()
 
-    return render(request, 'user_dashboard.html', {
+    return render(request, 'dashboard.html', {
         'restaurants': restaurants
     })
 
@@ -86,7 +86,7 @@ def get_all_restaurants(request):
 def get_all_bookings(request):
     bookings = Booking.objects.all()
 
-    return render(request, 'user_dashboard.html', {
+    return render(request, 'dashboard.html', {
         'bookings': bookings
     })
 
@@ -94,6 +94,6 @@ def get_all_bookings(request):
 def get_all_reviews(request):
     reviews = BookingReview.objects.all()
 
-    return render(request, 'user_dashboard.html', {
+    return render(request, 'dashboard.html', {
         'reviews': reviews
     })

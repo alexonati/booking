@@ -17,11 +17,11 @@ class Booking(models.Model):
                               null=True,
                               default=None,
                               blank=True,
-                              related_name='tables')
+                              related_name='table')
     participants = models.IntegerField()
     booking_fee_level = models.ForeignKey("BookingFee", on_delete=models.SET_NULL,
                                            null=True,
-                                           default=None,
+                                           default=1,
                                            blank=True,
                                            related_name='bookingfee')
     QR_code = models.ImageField()
@@ -43,17 +43,21 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=128, unique=True, null=False, blank=False)
     description = models.CharField(max_length=128, unique=True, null=False, blank=False)
     restaurant_owner = models.ForeignKey(global_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='booking_website/', null=True, default=None)
+    image = models.ImageField(upload_to='booking_website/', null=True, blank=True, default=None)
     restaurant_website_link = models.URLField(null=True,
                                               default=None,
                                               blank=True)
     subscription_fee_level = models.ForeignKey(RestaurantFees,
                                                on_delete=models.CASCADE,
                                                null=True,
-                                               default=None,
+                                               default=1,
                                                blank=True,
                                                related_name='subscription'
                                                )
+    tables = models.ForeignKey("Table", on_delete=models.CASCADE,
+                                        null=True,
+                                        blank=True,
+                                        related_name='tables')
 
     @property
     def image_url(self):
@@ -71,7 +75,7 @@ class Table(models.Model):
                                    null=True,
                                    default=None,
                                    blank=True,
-                                   related_name='tables')
+                                   related_name='restaurants')
     seats_number = models.IntegerField()
 
     def __str__(self):
