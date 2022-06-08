@@ -1,14 +1,21 @@
 from django.contrib import admin
 from django.utils.html import format_html
+
 from booking_website.models import Restaurant, Table, RestaurantFees
 
 
+class CSSAdminMixin(object):
+    class Media:
+        css = {
+            'all': ('../static/css/nolink.css',),
+        }
+        js = '../../static/js/nolink.js'
+
+
 @admin.register(Restaurant)
-class RestaurantAdmin(admin.ModelAdmin):
+class RestaurantAdmin(admin.ModelAdmin, CSSAdminMixin):
     list_display = ('name', 'description', 'image_html', 'restaurant_website_link', 'subscription_fee_level_string',)
     readonly_fields = ('subscription_fee_level',)
-    fieldsets = ((None, {
-        'fields': ('name', 'description', 'image', 'restaurant_website_link', 'subscription_fee_level_string',)}),)
 
     @admin.display(description='Image')
     def image_html(self, obj):
@@ -35,6 +42,7 @@ class RestaurantAdmin(admin.ModelAdmin):
 
         if not request.user.is_superuser:
             fields.remove('restaurant_owner')
+            fields.remove('tables')
         return fields
 
     def save_model(self, request, obj, form, change):

@@ -8,20 +8,23 @@
             <th class="col-1" scope="col">Restaurant Name</th>
             <th class="col-2 text-center" scope="col">Logo</th>
             <th class="col-2" scope="col">Website Link</th>
-            <th class="col-2" scope="col">Table with No. Seats available</th>
+            <th class="col-2 text-center" scope="col">Table with No. Seats available</th>
             <th class="col-2 text-center" scope="col">Book Table</th>
         </tr>
         </thead>
         <tbody>
+        {% for restaurant in restaurants %}
         <tr>
-            {% for restaurant in restaurants %}
             <td class="align-middle">{{restaurant.name}}</td>
-            <td class="align-middle text-center"><img src="{{restaurant.image_url}}" style="width: 100px; height: 100px;"/></td>
+            <td class="align-middle text-center"><img src="{{restaurant.image_url}}"
+                                                      style="width: 100px; height: 100px;"/></td>
             <td class="align-middle">{{restaurant.restaurant_website_link}}</td>
-            <td class="align-middle">{{restaurant.tables}}</td>
-            <td class="align-middle text-center"><button type="button" class="btn btn-info">Book</button></td>
-            {% endfor %}
+            <td class="align-middle text-center">{{restaurant.tables}}</td>
+            <td class="align-middle text-center">
+                <button class="btn btn-info" type="button">Book</button>
+            </td>
         </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>

@@ -1,9 +1,12 @@
-from django import forms
-from django.urls import reverse_lazy
-from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django import forms
+from django.contrib.admin.widgets import AdminIntegerFieldWidget
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
+from django.urls import reverse_lazy
+
+from booking_website.models import Restaurant, Profile
 
 AuthUser = get_user_model()
 
@@ -11,7 +14,7 @@ AuthUser = get_user_model()
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = AuthUser
-        fields = ['first_name', 'last_name', 'username', 'email', 'is_staff']
+        fields = ['first_name', 'last_name', 'email', 'is_staff']
         help_texts = {
             'is_staff': 'Only check this if you are a restaurant business owner.',
         }
@@ -35,7 +38,6 @@ class RegisterForm(forms.ModelForm):
     def clean_password(self):
         first_name = self.cleaned_data['first_name']
         last_name = self.cleaned_data['last_name']
-        username = self.cleaned_data.get('username')
         email = self.cleaned_data.get('email')
         password = self.cleaned_data['password']
         is_staff = self.cleaned_data['is_staff']
@@ -43,7 +45,6 @@ class RegisterForm(forms.ModelForm):
         user = AuthUser(
             first_name=first_name,
             last_name=last_name,
-            username=username,
             email=email,
             is_staff=is_staff
         )
@@ -70,3 +71,10 @@ class RegisterForm(forms.ModelForm):
         return user
 
 
+class ProfileAvatarForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['avatar']
+        labels = {
+            'avatar': 'Choose Profile Picture:'
+        }

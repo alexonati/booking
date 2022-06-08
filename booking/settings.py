@@ -136,3 +136,5 @@ LOGIN_URL = 'users:login'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGOUT_REDIRECT_URL = 'homepage'
+
+AUTH_USER_MODEL = "booking_website.AuthUser"

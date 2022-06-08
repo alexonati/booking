@@ -2,7 +2,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, HttpResponse
-from booking_website.forms import RegisterForm
+from booking_website.forms import RegisterForm, ProfileAvatarForm
 from booking_website.models import Restaurant, Booking, BookingReview
 
 
@@ -40,7 +40,7 @@ def register_view(request):
             login(request, user)
             if user.is_staff:
                 return redirect(reverse('admin:index'))
-            return redirect(reverse('dashboard.html'))
+            return redirect(reverse('user_dashboard_view'))
 
     return render(request, 'register.html', {
         'form': form
@@ -54,25 +54,15 @@ def logout_view(request):
 
 @login_required
 def user_dashboard_view(request):
-    return render(request, 'dashboard.html')
-
-
-def edit_profile(request):
     if request.method == 'GET':
-        form = RegisterForm()
+        form = ProfileAvatarForm()
     else:
-        form = RegisterForm(request.POST)
-
+        form = ProfileAvatarForm(files=request.FILES, instance=request.user.profile)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            if user.is_staff:
-                return redirect(reverse('admin:index'))
-            return redirect(reverse('profile'))
-
+            form.save()
+            return redirect(reverse('user_dashboard_view'))
     return render(request, 'dashboard.html', {
-        'form': form
-    })
+        'form': form})
 
 
 def get_all_restaurants(request):

@@ -1,0 +1,7 @@
+div.readonly {
+    color: blue;
+    cursor: not-allowed;
+    opacity: 1;
+    text-decoration: none;
+    pointer-events: none;
+}
