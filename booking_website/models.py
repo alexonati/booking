@@ -57,10 +57,6 @@ class Restaurant(models.Model):
                                                blank=True,
                                                related_name='subscription'
                                                )
-    tables = models.ForeignKey("Table", on_delete=models.CASCADE,
-                               null=True,
-                               blank=True,
-                               related_name='tables')
 
     @property
     def image_url(self):
@@ -78,7 +74,7 @@ class Table(models.Model):
                                    null=True,
                                    default=None,
                                    blank=True,
-                                   related_name='restaurants')
+                                   related_name='tables')
     seats_number = models.IntegerField()
 
     def __str__(self):

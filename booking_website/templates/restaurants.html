@@ -14,8 +14,7 @@
         </thead>
         <tbody>
         {% for restaurant in restaurants %}
-        {% for table in tables %}
-        {% if restaurant.id == table.restaurant_id %}
+        {% for table in restaurants.tables.all %}
         <tr class="rounded">
             <td class="rounded align-middle">{{restaurant.name}}</td>
             <td class="rounded align-middle text-center"><img src="{{restaurant.image_url}}"
@@ -26,7 +25,6 @@
                 <a class="btn btn-info btn-lg active" href="{% url 'book' %}">Reserve it</a>
             </td>
         </tr>
-        {% endif %}
         {% endfor %}
         {% endfor %}
         </tbody>

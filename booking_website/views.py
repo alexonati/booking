@@ -71,7 +71,7 @@ def get_all_restaurants(request):
 
     return render(request, 'dashboard.html', {
         'restaurants': restaurants,
-        'tables': tables
+        'tables': tables,
     })
 
 
