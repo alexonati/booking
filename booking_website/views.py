@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, HttpResponse
 from booking_website.forms import RegisterForm, ProfileAvatarForm
-from booking_website.models import Restaurant, Booking, BookingReview
+from booking_website.models import Restaurant, Booking, BookingReview, Table
 
 
 def homepage(request):
@@ -67,9 +67,11 @@ def user_dashboard_view(request):
 
 def get_all_restaurants(request):
     restaurants = Restaurant.objects.all()
+    tables = Table.objects.all()
 
     return render(request, 'dashboard.html', {
-        'restaurants': restaurants
+        'restaurants': restaurants,
+        'tables': tables
     })
 
 

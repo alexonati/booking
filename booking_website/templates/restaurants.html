@@ -14,16 +14,20 @@
         </thead>
         <tbody>
         {% for restaurant in restaurants %}
+        {% for table in tables %}
+        {% if restaurant.id == table.restaurant_id %}
         <tr class="rounded">
             <td class="rounded align-middle">{{restaurant.name}}</td>
             <td class="rounded align-middle text-center"><img src="{{restaurant.image_url}}"
-                                                      style="width: 100px; height: 100px;"/></td>
+                                                              style="width: 100px; height: 100px;"/></td>
             <td class="rounded align-middle">{{restaurant.restaurant_website_link}}</td>
-            <td class="rounded align-middle text-center">{{restaurant.tables.seats_number}}</td>
+            <td class="rounded align-middle text-center">{{table.seats_number}}</td>
             <td class="rounded align-middle text-center">
                 <a class="btn btn-info btn-lg active" href="{% url 'book' %}">Reserve it</a>
             </td>
         </tr>
+        {% endif %}
+        {% endfor %}
         {% endfor %}
         </tbody>
     </table>
