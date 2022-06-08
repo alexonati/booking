@@ -14,7 +14,7 @@
         </thead>
         <tbody>
         {% for restaurant in restaurants %}
-        {% for table in restaurants.tables.all %}
+        {% for table in restaurant.tables.all %}
         <tr class="rounded">
             <td class="rounded align-middle">{{restaurant.name}}</td>
             <td class="rounded align-middle text-center"><img src="{{restaurant.image_url}}"
