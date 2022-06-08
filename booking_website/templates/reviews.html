@@ -17,7 +17,10 @@
             <td>{{booking.id}}</td>
             <td>{{review.text}}></td>
             <td>{{review.restaurant}}</td>
-            <td class="align-middle text-center"><button type="button" class="btn btn-danger">Delete</button></td>
+            <td class="rounded align-middle text-center">
+                <a class="btn btn-info btn-lg active" href="{% url 'delete' %}">Delete it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'edit' %}">Edit it</a>
+            </td>
             {% endfor %}
         </tr>
         </tbody>

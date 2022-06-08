@@ -9,19 +9,19 @@
             <th class="col-2 text-center" scope="col">Logo</th>
             <th class="col-2" scope="col">Website Link</th>
             <th class="col-2 text-center" scope="col">Table with No. Seats available</th>
-            <th class="col-2 text-center" scope="col">Book Table</th>
+            <th class="col-2 text-center" scope="col">Make reservation</th>
         </tr>
         </thead>
         <tbody>
         {% for restaurant in restaurants %}
-        <tr>
-            <td class="align-middle">{{restaurant.name}}</td>
-            <td class="align-middle text-center"><img src="{{restaurant.image_url}}"
+        <tr class="rounded">
+            <td class="rounded align-middle">{{restaurant.name}}</td>
+            <td class="rounded align-middle text-center"><img src="{{restaurant.image_url}}"
                                                       style="width: 100px; height: 100px;"/></td>
-            <td class="align-middle">{{restaurant.restaurant_website_link}}</td>
-            <td class="align-middle text-center">{{restaurant.tables}}</td>
-            <td class="align-middle text-center">
-                <button class="btn btn-info" type="button">Book</button>
+            <td class="rounded align-middle">{{restaurant.restaurant_website_link}}</td>
+            <td class="rounded align-middle text-center">{{restaurant.tables.seats_number}}</td>
+            <td class="rounded align-middle text-center">
+                <a class="btn btn-info btn-lg active" href="{% url 'book' %}">Reserve it</a>
             </td>
         </tr>
         {% endfor %}

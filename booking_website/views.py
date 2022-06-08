@@ -87,3 +87,19 @@ def get_all_reviews(request):
     return render(request, 'dashboard.html', {
         'reviews': reviews
     })
+
+
+def make_a_booking(request):
+    return redirect(reverse('bookings'))
+
+
+def make_a_review(request):
+    return redirect(reverse('reviews'))
+
+
+def delete_a_review(request):
+    return redirect(reverse('reviews'))
+
+
+def edit_a_review(request):
+    return redirect(reverse('reviews'))

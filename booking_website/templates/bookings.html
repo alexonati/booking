@@ -12,7 +12,7 @@
             <th class="col-1" scope="col">Fee Level</th>
             <th class="col-2" scope="col">OR_code</th>
             <th class="col-2" scope="col">Card Number</th>
-            <th class="col-2" scope="col">Review</th>
+            <th class="col-2" scope="col">Submit a Review</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +25,9 @@
             <td>{{booking.fee_level}}</td>
             <td>{{booking.QR_code}}</td>
             <td>{{booking.card_no}}</td>
-            <td class="align-middle text-center"><button type="button" class="btn btn-info">Book</button></td>
+           <td class="rounded align-middle text-center">
+                <a class="btn btn-info btn-lg active" href="{% url 'review' %}">Review it</a>
+            </td>
             {% endfor %}
         </tr>
         </tbody>

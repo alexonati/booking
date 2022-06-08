@@ -1,12 +1,11 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms
-from django.contrib.admin.widgets import AdminIntegerFieldWidget
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
 from django.urls import reverse_lazy
 
-from booking_website.models import Restaurant, Profile
+from booking_website.models import Profile
 
 AuthUser = get_user_model()
 
