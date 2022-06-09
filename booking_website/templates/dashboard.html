@@ -43,14 +43,12 @@
                 {% include 'profile_page.html' %}
                 {% elif 'restaurants' in request.path %}
                 {% include 'restaurants.html' %}
+                {% elif 'reservation' in request.path %}
+                {% include 'make_reservation_page.html' %}
                 {% elif 'bookings' in request.path %}
-                 {% include 'bookings.html' %}
+                {% include 'bookings.html' %}
                 {% elif 'reviews' in request.path %}
                 {% include 'reviews.html' %}
-                {% elif 'profile' in request.path %}
-                {% csrf_token %}
-                <h1>Edit Profile</h1>
-                {% crispy form %}
                 {% endif %}
             </ul>
             </div>

@@ -1,11 +1,12 @@
 from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
 from crispy_forms.layout import Submit
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
 from django.urls import reverse_lazy
 
-from booking_website.models import Profile
+from booking_website.models import Profile, Booking
 
 AuthUser = get_user_model()
 
@@ -13,7 +14,7 @@ AuthUser = get_user_model()
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = AuthUser
-        fields = ['first_name', 'last_name', 'email', 'is_staff']
+        fields = ['first_name', 'last_name', 'email', 'is_staff', ]
         help_texts = {
             'is_staff': 'Only check this if you are a restaurant business owner.',
         }
@@ -76,4 +77,38 @@ class ProfileAvatarForm(forms.ModelForm):
         fields = ['avatar']
         labels = {
             'avatar': 'Choose Profile Picture:'
+        }
+
+
+class MakeBookingForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.layout = Layout(
+            Row(css_class='form-control-lg'),
+            Row(
+                Column('date', css_class='form-group col-md-2 mb-0'),
+                Column(),
+                Column(),
+                css_class='form-row'
+            ),
+            Row(css_class='form-control-lg'),
+            Row(
+                Column('time', css_class='form-group col-md-2 mb-0'),
+                Column(),
+                Column(),
+                css_class='form-row'
+            ),
+            Row(css_class='form-control-lg'),
+            Submit('submit', 'Make reservation')
+        )
+
+    class Meta:
+        model = Booking
+        fields = ['date', 'time']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'time': forms.TimeInput(attrs={'type': 'time'}, format='%H:%M')
+        }
+        labels = {
+            'date': 'Choose the date of the reservation:',
+            'time': 'Choose the time of the reservation:'
         }

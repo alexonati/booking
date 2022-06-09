@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 
 from booking_website.views import homepage, login_view, register_view, logout_view, login_or_register_view, \
-    get_all_restaurants, get_all_bookings, get_all_reviews, user_dashboard_view, make_a_booking, make_a_review, delete_a_review, edit_a_review
+    get_all_restaurants, get_all_bookings, get_all_reviews, user_dashboard_view, make_a_reservation, make_a_review, delete_a_review, edit_a_review
 
 urlpatterns = [
     path('', homepage, name='homepage'),
@@ -15,7 +15,7 @@ urlpatterns = [
     path('restaurants/', get_all_restaurants, name='restaurants'),
     path('bookings/', get_all_bookings, name='bookings'),
     path('reviews/', get_all_reviews, name='reviews'),
-    path('book/', make_a_booking, name='book'),
+    path('reservation/', make_a_reservation, name='reservation'),
     path('review/', make_a_review, name='review'),
     path('review/', delete_a_review, name='delete_review'),
     path('review/', edit_a_review, name='edit_review'),

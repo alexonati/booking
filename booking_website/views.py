@@ -1,8 +1,9 @@
 # Create your views here.
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, HttpResponse
-from booking_website.forms import RegisterForm, ProfileAvatarForm
+from booking_website.forms import RegisterForm, ProfileAvatarForm, MakeBookingForm
 from booking_website.models import Restaurant, Booking, BookingReview, Table
 
 
@@ -25,7 +26,8 @@ def login_view(request):
             if user.is_staff:
                 return redirect(reverse('admin:index'))
             return redirect(reverse('user_dashboard_view'))
-
+        else:
+            messages.warning(request, 'Username or password is incorrect. Please retry.')
     return render(request, 'login.html')
 
 
@@ -91,8 +93,21 @@ def get_all_reviews(request):
     })
 
 
-def make_a_booking(request):
-    return redirect(reverse('bookings'))
+def make_a_reservation(request):
+    if request.method == 'GET':
+        form = MakeBookingForm()
+    else:
+        form = MakeBookingForm(request.POST, instance=request.user.profile)
+        if form.is_valid():
+            booking = Booking()
+            booking.user = request.POST.get(request.user.profile.pk)
+            booking.date = request.POST.get('date')
+            booking.date = request.POST.get('time')
+            form.save()
+            return redirect(reverse('bookings'))
+
+    return render(request, 'make_reservation_page.html', {
+        'form': form})
 
 
 def make_a_review(request):

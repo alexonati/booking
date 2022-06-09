@@ -6,7 +6,7 @@
         <thead>
         <tr>
             <th class="col-1" scope="col">Restaurant Name</th>
-            <th class="col-2 text-center" scope="col">Logo</th>
+            <th class="col-1 text-center" scope="col">Logo</th>
             <th class="col-2" scope="col">Website Link</th>
             <th class="col-2 text-center" scope="col">Table with No. Seats available</th>
             <th class="col-2 text-center" scope="col">Make reservation</th>
@@ -15,6 +15,7 @@
         <tbody>
         {% for restaurant in restaurants %}
         {% for table in restaurant.tables.all %}
+        {% if table.booked == False %}
         <tr class="rounded">
             <td class="rounded align-middle">{{restaurant.name}}</td>
             <td class="rounded align-middle text-center"><img src="{{restaurant.image_url}}"
@@ -22,9 +23,10 @@
             <td class="rounded align-middle">{{restaurant.restaurant_website_link}}</td>
             <td class="rounded align-middle text-center">{{table.seats_number}}</td>
             <td class="rounded align-middle text-center">
-                <a class="btn btn-info btn-lg active" href="{% url 'book' %}">Reserve it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'reservation' %}">Reserve it</a>
             </td>
         </tr>
+        {% endif %}
         {% endfor %}
         {% endfor %}
         </tbody>

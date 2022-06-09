@@ -4,7 +4,11 @@
 {% block title %}Login page{% endblock %}
 
 {% block content %}
+{% for message in messages %}
+    <div class="alert alert-info">{{message}}</div>
+{% endfor %}
 <form class="p-5" action="{% url 'login' %}" method="post">
+
     {% csrf_token %}
     <div class="mb-3">
         <label class="form-label" for="exampleInputEmail1">Email address</label>

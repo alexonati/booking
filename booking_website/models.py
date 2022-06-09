@@ -9,7 +9,8 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class Booking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    time = models.DateTimeField()
+    date = models.DateField(default=None, blank=False, null=False)
+    time = models.TimeField(default=None, blank=False, null=False)
     restaurant = models.ForeignKey("Restaurant", on_delete=models.SET_NULL,
                                    null=True,
                                    default=None,
@@ -75,7 +76,8 @@ class Table(models.Model):
                                    default=None,
                                    blank=True,
                                    related_name='tables')
-    seats_number = models.IntegerField()
+    seats_number = models.IntegerField(null=False)
+    booked = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.id}'
