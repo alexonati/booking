@@ -2,7 +2,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, reverse, HttpResponse
+from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from booking_website.forms import RegisterForm, ProfileAvatarForm, MakeBookingForm
 from booking_website.models import Restaurant, Booking, BookingReview, Table
 
@@ -93,16 +93,22 @@ def get_all_reviews(request):
     })
 
 
-def make_a_reservation(request):
+def restaurants_and_tables(request):
+    restaurants = Restaurant.objects.all()
+    tables = Table.objects.all()
+    return {'restaurants': restaurants,
+            'tables': tables}
+
+
+def make_a_reservation(request, restaurant_id, table_id):
+    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
+    table = get_object_or_404(Table, id=table_id)
+    participants = table.seats_number
     if request.method == 'GET':
-        form = MakeBookingForm()
+        form = MakeBookingForm(request, restaurant_id, participants)
     else:
-        form = MakeBookingForm(request.POST, instance=request.user.profile)
+        form = MakeBookingForm(request.POST, restaurant_id, participants)
         if form.is_valid():
-            booking = Booking()
-            booking.user = request.POST.get(request.user.profile.pk)
-            booking.date = request.POST.get('date')
-            booking.date = request.POST.get('time')
             form.save()
             return redirect(reverse('bookings'))
 

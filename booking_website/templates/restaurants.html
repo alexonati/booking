@@ -23,7 +23,7 @@
             <td class="rounded align-middle">{{restaurant.restaurant_website_link}}</td>
             <td class="rounded align-middle text-center">{{table.seats_number}}</td>
             <td class="rounded align-middle text-center">
-                <a class="btn btn-info btn-lg active" href="{% url 'reservation' %}">Reserve it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'reservation' restaurant_id=restaurant.id table_id=table.id %}">Reserve it</a>
             </td>
         </tr>
         {% endif %}

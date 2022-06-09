@@ -22,14 +22,12 @@ class Booking(models.Model):
                               default=None,
                               blank=True,
                               related_name='table')
-    participants = models.IntegerField()
     booking_fee_level = models.ForeignKey("BookingFee", on_delete=models.SET_NULL,
                                           null=True,
                                           default=1,
                                           blank=True,
                                           related_name='bookingfee')
     QR_code = models.ImageField()
-    card_no = models.IntegerField()
 
     def __str__(self):
         return f'{self.id}'
