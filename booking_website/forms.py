@@ -1,3 +1,4 @@
+from crispy_forms.bootstrap import UneditableField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 from crispy_forms.layout import Submit
@@ -120,7 +121,6 @@ class MakeBookingForm(forms.ModelForm):
 
     helper = FormHelper()
     helper.layout = Layout(
-        Row(css_class='form-control-lg'),
         Row(
             Column('date', css_class='form-group col-md-2 mb-0'),
             Column(),
