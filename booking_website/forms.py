@@ -82,14 +82,6 @@ class ProfileAvatarForm(forms.ModelForm):
 
 class MakeBookingForm(forms.ModelForm):
 
-    def __init__(self, request, restaurant_id, participants, *args, **kwargs):
-        super(MakeBookingForm, self).__init__(*args, **kwargs)
-        self.fields['user'] = request.user.id
-        self.fields['restaurant'] = restaurant_id
-        self.fields['table'] = participants
-        self.fields['booking_fee_level'] = Booking.booking_fee_level
-        self.fields['QR_code'] = Booking.QR_code
-
     class Meta:
         model = Booking
         fields = '__all__'
@@ -106,6 +98,25 @@ class MakeBookingForm(forms.ModelForm):
             'date': 'Choose the date of the reservation:',
             'time': 'Choose the time of the reservation:'
         }
+
+    def __init__(self, *args, user=None, restaurant=None, table=None, participants=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._user = user
+        self._restaurant = restaurant
+        self._participants = participants
+        self._table = table.seats_number
+
+    def save(self, commit=True):
+        booking = super().save(commit=commit)
+        booking.user = self._user
+        booking.restaurant = self._restaurant
+        booking.table = self._table
+        booking.participants = self._participants
+
+        if commit:
+            booking.save()
+
+        return booking
 
     helper = FormHelper()
     helper.layout = Layout(
