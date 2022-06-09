@@ -82,7 +82,6 @@ class ProfileAvatarForm(forms.ModelForm):
 
 
 class MakeBookingForm(forms.ModelForm):
-
     class Meta:
         model = Booking
         fields = '__all__'
@@ -105,14 +104,13 @@ class MakeBookingForm(forms.ModelForm):
         self._user = user
         self._restaurant = restaurant
         self._participants = participants
-        self._table = table.seats_number
+        self._table = table
 
     def save(self, commit=True):
         booking = super().save(commit=commit)
         booking.user = self._user
         booking.restaurant = self._restaurant
         booking.table = self._table
-        booking.participants = self._participants
 
         if commit:
             booking.save()
@@ -121,19 +119,19 @@ class MakeBookingForm(forms.ModelForm):
 
     helper = FormHelper()
     helper.layout = Layout(
-        Row(
-            Column('date', css_class='form-group col-md-2 mb-0'),
-            Column(),
-            Column(),
-            css_class='form-row'
-        ),
-        Row(css_class='form-control-lg'),
-        Row(
-            Column('time', css_class='form-group col-md-2 mb-0'),
-            Column(),
-            Column(),
-            css_class='form-row'
-        ),
-        Row(css_class='form-control-lg'),
-        Submit('submit', 'Make reservation')
-    )
+            Row(
+                Column('date', css_class='form-group col-md-2 mb-0'),
+                Column(),
+                Column(),
+                css_class='form-row'
+            ),
+            Row(css_class='form-control-lg'),
+            Row(
+                Column('time', css_class='form-group col-md-2 mb-0'),
+                Column(),
+                Column(),
+                css_class='form-row'
+            ),
+            Row(css_class='form-control-lg'),
+            Submit('submit', 'Make reservation')
+        )
