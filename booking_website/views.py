@@ -104,10 +104,13 @@ def make_a_reservation(request, restaurant_id, table_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
     table = get_object_or_404(Table, id=table_id)
     if request.method == 'GET':
-        form = MakeBookingForm(user=request.user, restaurant=restaurant, table=table)
+        form = MakeBookingForm(request=request, user=request.user, restaurant=restaurant, table=table)
     else:
-        form = MakeBookingForm(request.POST, user=request.user, restaurant=restaurant, table=table,
+        form = MakeBookingForm(request=request.POST, user=request.user, restaurant=restaurant, table=table,
                                )
+        print('form.is_valid()', form.is_valid())
+        for field in form:
+            print("Field Error:", field.name, field.errors, field.value())
         if form.is_valid():
             form.save()
             table.booked = True

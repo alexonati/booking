@@ -94,15 +94,15 @@ class MakeBookingForm(forms.ModelForm):
             'time': 'Choose the time of the reservation:'
         }
 
-    def __init__(self, *args, user=None, restaurant=None, table=None, **kwargs):
+    def __init__(self, *args, request, user=None, restaurant=None, table=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self._user = user
-        self._restaurant = restaurant
-        self._table = table
+        self._user = user.profile.pk
+        self._restaurant = restaurant.pk
+        self._table = table.pk
 
     def save(self, commit=True):
         booking = super().save(commit=False)
-        booking.user = self._user
+        booking.user = self._user.profile
         booking.restaurant = self._restaurant
         booking.table = self._table
 

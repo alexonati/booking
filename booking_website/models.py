@@ -27,7 +27,7 @@ class Booking(models.Model):
                                           default=1,
                                           blank=True,
                                           related_name='bookingfee')
-    QR_code = models.ImageField()
+    QR_code = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.id}'
