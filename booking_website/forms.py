@@ -1,4 +1,3 @@
-from crispy_forms.bootstrap import UneditableField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 from crispy_forms.layout import Submit
@@ -94,11 +93,15 @@ class MakeBookingForm(forms.ModelForm):
             'time': 'Choose the time of the reservation:'
         }
 
-    def __init__(self, *args, user=None, restaurant=None, table=None, **kwargs):
+    def __init__(self, *args, **kwargs):
+
+        self._instance = kwargs.get('instance')
+        self._user = kwargs.get('user')
+        self._restaurant = kwargs.get('restaurant')
+        self._table = kwargs.get('table')
+
         super().__init__(*args, **kwargs)
-        self._user = user
-        self._restaurant = restaurant
-        self._table = table
+
         self.fields['user'].required = False
         self.fields['restaurant'].required = False
         self.fields['table'].required = False
@@ -107,7 +110,7 @@ class MakeBookingForm(forms.ModelForm):
 
     def save(self, commit=True):
         booking = super().save(commit=False)
-        booking.user = self._user
+        booking.user = self._instance.user if self._instance else self._user
         booking.restaurant = self._restaurant
         booking.table = self._table
 
@@ -115,57 +118,3 @@ class MakeBookingForm(forms.ModelForm):
             booking.save()
 
         return booking
-
-    helper = FormHelper()
-    helper.form_method = 'POST'
-    helper.layout = Layout(
-        Row(
-            Column('date', css_class='form-group col-md-2 mb-0'),
-            Column(),
-            Column(),
-            css_class='form-row'
-        ),
-        Row(css_class='form-control-lg'),
-        Row(
-            Column('time', css_class='form-group col-md-2 mb-0'),
-            Column(),
-            Column(),
-            css_class='form-row'
-        ),
-        Row(css_class='form-control-lg'),
-        Submit('submit', 'Make reservation')
-    )
-
-
-class EditBookingForm(forms.ModelForm):
-    class Meta:
-        model = Booking
-        fields = '__all__'
-        widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
-            'time': forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
-        }
-        labels = {
-            'date': 'Choose the date of the reservation:',
-            'time': 'Choose the time of the reservation:'
-        }
-
-    helper = FormHelper()
-    helper.form_method = 'POST'
-    helper.layout = Layout(
-        Row(
-            Column('date', css_class='form-group col-md-2 mb-0'),
-            Column(),
-            Column(),
-            css_class='form-row'
-        ),
-        Row(css_class='form-control-lg'),
-        Row(
-            Column('time', css_class='form-group col-md-2 mb-0'),
-            Column(),
-            Column(),
-            css_class='form-row'
-        ),
-        Row(css_class='form-control-lg'),
-        Submit('submit', 'Edit reservation')
-    )
