@@ -88,11 +88,6 @@ class MakeBookingForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
-            'user': forms.HiddenInput(),
-            'restaurant': forms.HiddenInput(),
-            'table': forms.HiddenInput(),
-            'booking_fee_level': forms.HiddenInput(),
-            'QR_code': forms.HiddenInput()
         }
         labels = {
             'date': 'Choose the date of the reservation:',
