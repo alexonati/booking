@@ -88,26 +88,20 @@ class MakeBookingForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
-            'user': forms.HiddenInput(),
-            'restaurant': forms.HiddenInput(),
-            'table': forms.HiddenInput(),
-            'booking_fee_level': forms.HiddenInput(),
-            'QR_code': forms.HiddenInput()
         }
         labels = {
             'date': 'Choose the date of the reservation:',
             'time': 'Choose the time of the reservation:'
         }
 
-    def __init__(self, *args, user=None, restaurant=None, table=None, participants=None, **kwargs):
+    def __init__(self, *args, user=None, restaurant=None, table=None, **kwargs):
         super().__init__(*args, **kwargs)
         self._user = user
         self._restaurant = restaurant
-        self._participants = participants
         self._table = table
 
     def save(self, commit=True):
-        booking = super().save(commit=commit)
+        booking = super().save(commit=False)
         booking.user = self._user
         booking.restaurant = self._restaurant
         booking.table = self._table
@@ -118,20 +112,21 @@ class MakeBookingForm(forms.ModelForm):
         return booking
 
     helper = FormHelper()
+    helper.form_method = 'POST'
     helper.layout = Layout(
-            Row(
-                Column('date', css_class='form-group col-md-2 mb-0'),
-                Column(),
-                Column(),
-                css_class='form-row'
-            ),
-            Row(css_class='form-control-lg'),
-            Row(
-                Column('time', css_class='form-group col-md-2 mb-0'),
-                Column(),
-                Column(),
-                css_class='form-row'
-            ),
-            Row(css_class='form-control-lg'),
-            Submit('submit', 'Make reservation')
-        )
+        Row(
+            Column('date', css_class='form-group col-md-2 mb-0'),
+            Column(),
+            Column(),
+            css_class='form-row'
+        ),
+        Row(css_class='form-control-lg'),
+        Row(
+            Column('time', css_class='form-group col-md-2 mb-0'),
+            Column(),
+            Column(),
+            css_class='form-row'
+        ),
+        Row(css_class='form-control-lg'),
+        Submit('submit', 'Make reservation')
+    )

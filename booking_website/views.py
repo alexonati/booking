@@ -111,6 +111,7 @@ def make_a_reservation(request, restaurant_id, table_id):
         if form.is_valid():
             form.save()
             table.booked = True
+            table.save()
             return redirect(reverse('bookings'))
 
     return render(request, 'make_reservation_page.html', {
