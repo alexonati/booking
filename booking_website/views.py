@@ -148,7 +148,7 @@ def editreservation(request, booking_id):
 def deletereservation(request, booking_id):
 
     booking = get_object_or_404(Booking, id=booking_id)
-    table = get_object_or_404(Table, id=booking.table)
+    table = get_object_or_404(Table, id=booking.table.pk)
 
     if request.method == 'POST':
         booking.delete()
