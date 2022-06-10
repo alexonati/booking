@@ -131,7 +131,7 @@ def editreservation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
     if request.method == 'GET':
-        form = EditBookingForm(instance=booking)
+        form = EditBookingForm(request, instance=booking)
 
     if request.method == 'POST':
 
@@ -146,6 +146,7 @@ def editreservation(request, booking_id):
 
 
 def deletereservation(request, booking_id):
+
     booking = get_object_or_404(Booking, id=booking_id)
     table = get_object_or_404(Table, id=booking.table)
 
