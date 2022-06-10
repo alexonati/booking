@@ -99,10 +99,15 @@ class MakeBookingForm(forms.ModelForm):
         self._user = user
         self._restaurant = restaurant
         self._table = table
+        self.fields['user'].required = False
+        self.fields['restaurant'].required = False
+        self.fields['table'].required = False
+        self.fields['booking_fee_level'].required = False
+        self.fields['QR_code'].required = False
 
     def save(self, commit=True):
         booking = super().save(commit=False)
-        booking.user = self._user.profile
+        booking.user = self._user
         booking.restaurant = self._restaurant
         booking.table = self._table
 
@@ -128,5 +133,39 @@ class MakeBookingForm(forms.ModelForm):
             css_class='form-row'
         ),
         Row(css_class='form-control-lg'),
-        Submit('submit', 'Make reservation')
+        Submit('submit', 'Make / Edit reservation')
+    )
+
+
+class EditBookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = '__all__'
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'time': forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
+        }
+        labels = {
+            'date': 'Choose the date of the reservation:',
+            'time': 'Choose the time of the reservation:'
+        }
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    helper.layout = Layout(
+        Row(
+            Column('date', css_class='form-group col-md-2 mb-0'),
+            Column(),
+            Column(),
+            css_class='form-row'
+        ),
+        Row(css_class='form-control-lg'),
+        Row(
+            Column('time', css_class='form-group col-md-2 mb-0'),
+            Column(),
+            Column(),
+            css_class='form-row'
+        ),
+        Row(css_class='form-control-lg'),
+        Submit('submit', 'Make / Edit reservation')
     )

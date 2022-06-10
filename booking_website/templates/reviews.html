@@ -4,22 +4,23 @@
 <div class="table-responsive">
     <table class="table table-striped table-sm">
         <thead>
-        <tr>
+        <tr class="text-center">
             <th class="col-2" scope="col">Booking ID</th>
-            <th class="col-6" scope="col">Text</th>
+            <th class="col-5" scope="col">Text</th>
             <th class="col-2" scope="col">Restaurant</th>
-            <th class="col-2" scope="col">Delete Review</th>
+            <th class="col-1" scope="col">Edit Booking</th>
+            <th class="col-2" scope="col">Delete Booking</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr class="text-center">
             {% for review in reviews %}
             <td>{{booking.id}}</td>
             <td>{{review.text}}></td>
             <td>{{review.restaurant}}</td>
             <td class="rounded align-middle text-center">
-                <a class="btn btn-info btn-lg active" href="{% url 'delete' %}">Delete it</a>
-                <a class="btn btn-info btn-lg active" href="{% url 'edit' %}">Edit it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'editreview' %}">Delete it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'deletereview' %}">Edit it</a>
             </td>
             {% endfor %}
         </tr>

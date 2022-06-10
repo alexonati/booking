@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Delete Booking page{% endblock %}
+
+{% block content %}
+<h1>Are you sure you want to delete the reservation you made at {{booking_name}}</h1>
+
+<form action="{% url 'deletereservation' booking_id=booking.pk" method="POST">
+    {% csrf_token %}
+    <a href="{% url 'bookings' %}">Cancel</a>
+    <input name="Confirm" type="submit">
+</form>
+{% endblock %}

@@ -30,7 +30,7 @@ class Booking(models.Model):
     QR_code = models.ImageField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.id}'
+        return f'Booking {self.id}'
 
 
 class RestaurantFees(models.Model):

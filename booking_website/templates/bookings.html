@@ -4,31 +4,35 @@
 <div class="table-responsive">
     <table class="table table-striped table-sm">
         <thead>
-        <tr>
+        <tr class="text-center">
             <th class="col-1" scope="col">Booking time</th>
             <th class="col-1" scope="col">Booking date</th>
             <th class="col-1" scope="col">Restaurant</th>
             <th class="col-1" scope="col">Table</th>
             <th class="col-1" scope="col">Participants</th>
             <th class="col-1" scope="col">Fee Level</th>
-            <th class="col-2" scope="col">OR_code</th>
-            <th class="col-2" scope="col">Card Number</th>
             <th class="col-2" scope="col">Submit a Review</th>
+            <th class="col-1" scope="col">Edit Booking</th>
+            <th class="col-1" scope="col">Delete Booking</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr class="align-middle text-center">
             {% for booking in bookings %}
             <td>{{booking.time}}</td>
             <td>{{booking.date}}</td>
-            <td>{{booking.restaurant}}></td>
+            <td>{{booking.restaurant}}</td>
             <td>{{booking.table}}</td>
-            <td>{{booking.participants}}</td>
+            <td>{{booking.table.seats_number}}</td>
             <td>{{booking.booking_fee_level}}</td>
-            <td>{{booking.QR_code}}</td>
-            <td>{{booking.card_no}}</td>
-           <td class="rounded align-middle text-center">
-                <a class="btn btn-info btn-lg active" href="{% url 'review' %}">Review it</a>
+           <td class="rounded align-middle">
+                <a class="btn btn-info btn-lg active" href="{% url 'review' %}">Add Review</a>
+            </td>
+            <td class="rounded align-middle">
+                <a class="btn btn-warning btn-lg active" href="{% url 'edit_reservation' booking_id=booking.pk %}">Edit</a>
+            </td>
+            <td class="rounded align-middle">
+                <a class="btn btn-danger btn-lg active" href="{% url 'delete_reservation' booking_id=booking.pk %}">Delete</a>
             </td>
             {% endfor %}
         </tr>
