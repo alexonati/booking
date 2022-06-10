@@ -137,6 +137,10 @@ def editreservation(request, booking_id):
 
         form = EditBookingForm(request.POST, instance=booking)
 
+        print('form.is_valid()', form.is_valid())
+        for field in form:
+            print("*****", field.name, field.errors, field.value())
+
         if form.is_valid():
             form.save()
             return redirect(reverse('bookings'))
