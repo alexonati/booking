@@ -4,11 +4,12 @@
 {% block title %}Delete Booking page{% endblock %}
 
 {% block content %}
-<h1>Are you sure you want to delete the reservation you made at {{booking_name}}</h1>
 
-<form action="{% url 'deletereservation' booking_id=booking.pk" method="POST">
+<h2 style="padding: 20px;">Are you sure you want to delete the reservation you made at {{booking.restaurant}} restaurant for the {{booking.date}} at {{booking.time}} ?</h2>
+
+<form class="form-control" action="{% url 'delete_reservation' booking_id=booking.pk" method="POST">
     {% csrf_token %}
-    <a href="{% url 'bookings' %}">Cancel</a>
-    <input name="Confirm" type="submit">
+    <input class="btn btn-primary" type="submit">
+    <a class="btn btn-danger" href="{% url 'bookings' %}">Cancel</a>
 </form>
 {% endblock %}

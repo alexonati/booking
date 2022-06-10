@@ -131,7 +131,7 @@ def editreservation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
     if request.method == 'GET':
-        form = EditBookingForm(request, instance=booking)
+        form = EditBookingForm(instance=booking)
 
     if request.method == 'POST':
 
@@ -157,7 +157,7 @@ def deletereservation(request, booking_id):
         return redirect(reverse('bookings'))
 
     return render(request, 'delete_booking.html', {
-        'booking_name': booking.restaurant})
+        'booking': booking})
 
 
 def make_a_review(request):
