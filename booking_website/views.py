@@ -126,12 +126,13 @@ def make_a_reservation(request, restaurant_id, table_id):
         'form': form})
 
 
-def editreservation(request, booking_id):
+def edit_reservation(request, booking_id):
 
     booking = get_object_or_404(Booking, id=booking_id)
+    form = EditBookingForm(instance=booking)
 
-    if request.method == 'GET':
-        form = EditBookingForm(instance=booking)
+    # if request.method == 'GET':
+    #     form = EditBookingForm(instance=booking)
 
     if request.method == 'POST':
 
@@ -149,7 +150,7 @@ def editreservation(request, booking_id):
         'form': form})
 
 
-def deletereservation(request, booking_id):
+def delete_reservation(request, booking_id):
 
     booking = get_object_or_404(Booking, id=booking_id)
     table = get_object_or_404(Table, id=booking.table.pk)

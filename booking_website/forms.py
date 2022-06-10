@@ -133,7 +133,7 @@ class MakeBookingForm(forms.ModelForm):
             css_class='form-row'
         ),
         Row(css_class='form-control-lg'),
-        Submit('submit', 'Make / Edit reservation')
+        Submit('submit', 'Make reservation')
     )
 
 
@@ -167,5 +167,5 @@ class EditBookingForm(forms.ModelForm):
             css_class='form-row'
         ),
         Row(css_class='form-control-lg'),
-        Submit('submit', 'Make / Edit reservation')
+        Submit('submit', 'Edit reservation')
     )
