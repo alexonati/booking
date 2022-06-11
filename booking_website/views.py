@@ -106,15 +106,14 @@ def make_a_reservation(request, restaurant_id, table_id):
     table = get_object_or_404(Table, id=table_id)
 
     if request.method == 'GET':
-        form = MakeBookingForm(user=request.user, restaurant=restaurant, table=table)
+        form = MakeBookingForm(request, user=request.user, restaurant=restaurant, table=table)
     else:
-        form = MakeBookingForm(request.POST, user=request.user, restaurant=restaurant, table=table,
-                               )
+        form = MakeBookingForm(request.POST, user=request.user, restaurant=restaurant, table=table)
 
         # **** USED FOR DEBUG ****
-        # print('form.is_valid()', form.is_valid())
-        # for field in form:
-        #     print("*****", field.name, field.errors, field.value())
+        print('form.is_valid()', form.is_valid())
+        for field in form:
+            print("*****", field.name, field.errors, field.value())
 
         if form.is_valid():
             form.save()
@@ -128,11 +127,11 @@ def make_a_reservation(request, restaurant_id, table_id):
 
 def edit_reservation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
-    form = MakeBookingForm(instance=booking)
+    form = MakeBookingForm(user=booking.user, restaurant=booking.restaurant, table=booking.table, instance=booking)
 
     if request.method == 'POST':
 
-        form = MakeBookingForm(request.POST, instance=booking)
+        form = MakeBookingForm(request.POST, user=booking.user, restaurant=booking.restaurant, table=booking.table, instance=booking)
         print('form.is_valid()', form.is_valid())
         for field in form:
             print("*****", field.name, field.errors, field.value())
@@ -143,7 +142,6 @@ def edit_reservation(request, booking_id):
 
     return render(request, 'make_reservation_page.html', {
         'form': form})
-
 
 def delete_reservation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)

@@ -4,9 +4,12 @@
 {% block title %}Reservation Details {% endblock %}
 
 {% block content %}
- <form  method = "post">
+<div style="margin-left: 50px;">
+ <br><br><br>
+    <h1>Reservation details</h1>
+    <br>
     {% csrf_token %}
-    {{form.as_p }}
-    <input type="submit" value=Submit">
-</form>
+    {% crispy form %}
+    <a class="btn btn-danger" href="{% url 'bookings' %}">Cancel</a>
+    </div>
 {% endblock %}

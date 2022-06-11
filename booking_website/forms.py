@@ -93,12 +93,11 @@ class MakeBookingForm(forms.ModelForm):
             'time': 'Choose the time of the reservation:'
         }
 
-    def __init__(self, *args, **kwargs):
-
+    def __init__(self, *args, user, restaurant, table, **kwargs):
         self._instance = kwargs.get('instance')
-        self._user = kwargs.get('user')
-        self._restaurant = kwargs.get('restaurant')
-        self._table = kwargs.get('table')
+        self._user = user
+        self._restaurant = restaurant
+        self._table = table
 
         super().__init__(*args, **kwargs)
 
@@ -110,11 +109,31 @@ class MakeBookingForm(forms.ModelForm):
 
     def save(self, commit=True):
         booking = super().save(commit=False)
-        booking.user = self._instance.user if self._instance else self._user
-        booking.restaurant = self._restaurant
-        booking.table = self._table
+        booking.user = self._user
+        booking.restaurant = self._instance.restaurant if self._instance else self._restaurant
+        booking.table = self._instance.table if self._instance else self._table
 
         if commit:
             booking.save()
 
         return booking
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    helper.layout = Layout(
+        Row(
+            Column('date', css_class='form-group col-md-2 mb-0'),
+            Column(),
+            Column(),
+            css_class='form-row'
+        ),
+        Row(css_class='form-control-lg'),
+        Row(
+            Column('time', css_class='form-group col-md-2 mb-0'),
+            Column(),
+            Column(),
+            css_class='form-row'
+        ),
+        Row(css_class='form-control-lg'),
+        Submit('submit', 'Make / Edit reservation')
+    )
