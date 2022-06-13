@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class Booking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    review = models.ForeignKey("BookingReview", default=None, blank=False, null=True, related_name='review', on_delete=models.SET_NULL)
     date = models.DateField(default=None, blank=False, null=False)
     time = models.TimeField(default=None, blank=False, null=False)
     restaurant = models.ForeignKey("Restaurant", on_delete=models.SET_NULL,
@@ -92,13 +93,6 @@ class BookingFee(models.Model):
 class BookingReview(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     review_text = models.TextField()
-    booking = models.ForeignKey(Booking,
-                                on_delete=models.SET_NULL,
-                                null=True,
-                                default=None,
-                                blank=True,
-                                related_name='reviews')
-
     restaurant = models.ForeignKey(Restaurant,
                                    on_delete=models.SET_NULL,
                                    null=True,

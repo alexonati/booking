@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
-from booking_website.forms import RegisterForm, ProfileAvatarForm, MakeBookingForm, MakeReviewForm
+from booking_website.forms import RegisterForm, ProfileAvatarForm, MakeBookingForm, MakeReviewForm, EditReviewForm
 from booking_website.models import Restaurant, Booking, BookingReview, Table
 
 
@@ -162,11 +162,11 @@ def delete_reservation(request, booking_id):
 
 def make_a_review(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
-    form = MakeReviewForm(instance=booking, user=request.user)
+    form = MakeReviewForm(user=request.user, instance=booking)
 
     if request.method == 'POST':
-        form = MakeReviewForm(request.POST,
-                              instance=booking, user=request.user)
+        form = MakeReviewForm(request.POST, user=request.user,
+                              instance=booking)
 
         print('form.is_valid()', form.is_valid())
         for field in form:
@@ -182,12 +182,13 @@ def make_a_review(request, booking_id):
 
 def edit_review(request, review_id):
     review = get_object_or_404(Booking, id=review_id)
-    form = MakeReviewForm(instance=review, restaurant=review.restaurant, user=review.user)
+    form = EditReviewForm(instance=review)
 
     if request.method == 'POST':
 
-        form = MakeReviewForm(request.POST, user=review.user, restaurant=review.restaurant,
+        form = EditReviewForm(request.POST,
                               instance=review)
+
         print('form.is_valid()', form.is_valid())
         for field in form:
             print("*****", field.name, field.errors, field.value())

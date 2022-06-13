@@ -5,25 +5,26 @@
     <table class="table table-striped table-sm">
         <thead>
         <tr class="text-center">
-            <th class="col-2" scope="col">Booking ID</th>
+            <th class="col-1" scope="col">Booking ID</th>
             <th class="col-5" scope="col">Text</th>
             <th class="col-2" scope="col">Restaurant</th>
-            <th class="col-1" scope="col">Edit Booking</th>
-            <th class="col-2" scope="col">Delete Booking</th>
+            <th class="col-1" scope="col">Edit Review</th>
+            <th class="col-2" scope="col">Delete Review</th>
         </tr>
         </thead>
         <tbody>
+        {% for review in reviews %}
         <tr class="text-center">
-            {% for review in reviews %}
-            <td>{{booking.id}}</td>
+            <td>{{review.id}}</td>
             <td>{{review.text}}></td>
             <td>{{review.restaurant}}</td>
             <td class="rounded align-middle text-center">
-                <a class="btn btn-info btn-lg active" href="{% url 'edit_review' booking_id=booking.pk %}">Delete it</a>
-                <a class="btn btn-info btn-lg active" href="{% url 'delete_review' review_id=review.pk  %}">Edit it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'edit_review' review_id=review.pk %}">Edit it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'delete_review' review_id=review.pk  %}">Delete
+                    it</a>
             </td>
-            {% endfor %}
         </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>

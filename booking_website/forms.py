@@ -160,19 +160,17 @@ class MakeReviewForm(forms.ModelForm):
 
         self.fields['user'].required = False
         self.fields['restaurant'].required = False
-        self.fields['booking'].required = False
 
     def save(self, commit=True):
-        booking_review = super().save(commit=False)
-        booking_review.user = self._user
-        booking_review.text = self._text
-        booking_review.booking = self._instance
-        booking_review.restaurant = self._instance.restaurant if self._instance else self._restaurant
+        review = super().save(commit=False)
+        review.user = self._user
+        review.text = self._text
+        review.restaurant = self._instance.restaurant if self._instance else self._restaurant
 
         if commit:
-            booking_review.save()
+            review.save()
 
-        return booking_review
+        return review
 
     helper = FormHelper()
     helper.form_method = 'POST'
@@ -182,5 +180,50 @@ class MakeReviewForm(forms.ModelForm):
             css_class='form-row'
         ),
         Row(css_class='form-control-lg'),
-        Submit('submit', 'Submit / Edit review')
+        Submit('submit', 'Submit review')
+    )
+
+
+class EditReviewForm(forms.ModelForm):
+    class Meta:
+        model = BookingReview
+        fields = '__all__'
+        widgets = {
+            'review_text': forms.Textarea(attrs={'rows': 3, 'col': 6}),
+        }
+        labels = {
+            'review_text': 'Feel free to add your thoughts about this particular experience:',
+        }
+
+    def __init__(self, *args, **kwargs):
+        self._instance = kwargs.get('instance')
+        self._user = self._instance.user
+        self._restaurant = self._instance.restaurant
+        self._text = self._instance.text
+
+        super().__init__(*args, **kwargs)
+
+        self.fields['user'].required = False
+        self.fields['restaurant'].required = False
+
+    def save(self, commit=True):
+        review = super().save(commit=False)
+        review.user = self._user
+        review.text = self._instance.text if self._instance else self._text
+        review.restaurant = self._instance.restaurant if self._instance else self._restaurant
+
+        if commit:
+            review.save()
+
+        return review
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    helper.layout = Layout(
+        Row(
+            Column('review_text', css_class='form-group col-md-4 mb-0'),
+            css_class='form-row'
+        ),
+        Row(css_class='form-control-lg'),
+        Submit('submit', 'Edit review')
     )
