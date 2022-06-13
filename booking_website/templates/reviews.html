@@ -19,8 +19,8 @@
             <td>{{review.text}}></td>
             <td>{{review.restaurant}}</td>
             <td class="rounded align-middle text-center">
-                <a class="btn btn-info btn-lg active" href="{% url 'editreview' %}">Delete it</a>
-                <a class="btn btn-info btn-lg active" href="{% url 'deletereview' %}">Edit it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'edit_review' booking_id=booking.pk %}">Delete it</a>
+                <a class="btn btn-info btn-lg active" href="{% url 'delete_review' review_id=review.pk  %}">Edit it</a>
             </td>
             {% endfor %}
         </tr>

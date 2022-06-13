@@ -3,7 +3,7 @@ from django.urls import path
 
 from booking_website.views import homepage, login_view, register_view, logout_view, login_or_register_view, \
     get_all_restaurants, get_all_bookings, get_all_reviews, user_dashboard_view, make_a_reservation, make_a_review, \
-    delete_a_review, edit_a_review, edit_reservation, delete_reservation
+    delete_review, edit_review, edit_reservation, delete_reservation
 
 urlpatterns = [
     path('', homepage, name='homepage'),
@@ -19,7 +19,8 @@ urlpatterns = [
     path('reservation/<int:restaurant_id>/<int:table_id>/', make_a_reservation, name='reservation'),
     path('edit_reservation/<int:booking_id>/', edit_reservation, name='edit_reservation'),
     path('delete_reservation/<int:booking_id>/', delete_reservation, name='delete_reservation'),
-    path('review/', make_a_review, name='review'),
-    path('review/', delete_a_review, name='delete_review'),
-    path('review/', edit_a_review, name='edit_review'),
+    path('review/<int:booking_id>/', make_a_review, name='review'),
+    path('review/<int:review_id>/', edit_review, name='edit_review'),
+    path('review/<int:review_id>/', delete_review, name='delete_review'),
+
 ]

@@ -5,6 +5,7 @@
     <table class="table table-striped table-sm">
         <thead>
         <tr class="text-center">
+            <th class="col-1" scope="col">Booking ID</th>
             <th class="col-1" scope="col">Booking time</th>
             <th class="col-1" scope="col">Booking date</th>
             <th class="col-1" scope="col">Restaurant</th>
@@ -17,25 +18,28 @@
         </tr>
         </thead>
         <tbody>
+        {% for booking in bookings %}
         <tr class="align-middle text-center">
-            {% for booking in bookings %}
+            <td>{{booking.id}}</td>
             <td>{{booking.time}}</td>
             <td>{{booking.date}}</td>
             <td>{{booking.restaurant}}</td>
             <td>{{booking.table}}</td>
             <td>{{booking.table.seats_number}}</td>
             <td>{{booking.booking_fee_level}}</td>
-           <td class="rounded align-middle">
-                <a class="btn btn-info btn-lg active" href="{% url 'review' %}">Add Review</a>
+            <td class="rounded align-middle">
+                <a class="btn btn-info btn-lg active" href="{% url 'review' booking_id=booking.pk  %}">Add Review</a>
             </td>
             <td class="rounded align-middle">
-                <a class="btn btn-warning btn-lg active" href="{% url 'edit_reservation' booking_id=booking.pk %}">Edit</a>
+                <a class="btn btn-warning btn-lg active"
+                   href="{% url 'edit_reservation' booking_id=booking.pk %}">Edit</a>
             </td>
             <td class="rounded align-middle">
                 <a class="btn btn-danger btn-lg active" href="{% url 'delete_reservation' booking_id=booking.pk %}">Delete</a>
             </td>
-            {% endfor %}
+
         </tr>
+                    {% endfor %}
         </tbody>
     </table>
 </div>

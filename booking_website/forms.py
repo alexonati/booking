@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
 from django.urls import reverse_lazy
 
-from booking_website.models import Profile, Booking
+from booking_website.models import Profile, Booking, BookingReview
 
 AuthUser = get_user_model()
 
@@ -136,4 +136,51 @@ class MakeBookingForm(forms.ModelForm):
         ),
         Row(css_class='form-control-lg'),
         Submit('submit', 'Make / Edit reservation')
+    )
+
+
+class MakeReviewForm(forms.ModelForm):
+    class Meta:
+        model = BookingReview
+        fields = '__all__'
+        widgets = {
+            'review_text': forms.Textarea(attrs={'rows': 3, 'col': 6}),
+        }
+        labels = {
+            'review_text': 'Feel free to add your thoughts about this particular experience:',
+        }
+
+    def __init__(self, *args, user, **kwargs):
+        self._instance = kwargs.get('instance')
+        self._user = user
+        self._restaurant = self._instance.restaurant
+        self._text = kwargs.get('text')
+
+        super().__init__(*args, **kwargs)
+
+        self.fields['user'].required = False
+        self.fields['restaurant'].required = False
+        self.fields['booking'].required = False
+
+    def save(self, commit=True):
+        booking_review = super().save(commit=False)
+        booking_review.user = self._user
+        booking_review.text = self._text
+        booking_review.booking = self._instance
+        booking_review.restaurant = self._instance.restaurant if self._instance else self._restaurant
+
+        if commit:
+            booking_review.save()
+
+        return booking_review
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    helper.layout = Layout(
+        Row(
+            Column('review_text', css_class='form-group col-md-4 mb-0'),
+            css_class='form-row'
+        ),
+        Row(css_class='form-control-lg'),
+        Submit('submit', 'Submit / Edit review')
     )

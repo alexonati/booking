@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Review Content {% endblock %}
+
+{% block content %}
+<div style="margin-left: 50px;">
+ <br><br><br>
+    <h1>Review text</h1>
+    <br>
+    {% csrf_token %}
+    {% crispy form %}
+
+    <a class="btn btn-danger" href="{% url 'reviews' %}">Cancel</a>
+    </div>
+{% endblock %}
