@@ -20,7 +20,7 @@ urlpatterns = [
     path('edit_reservation/<int:booking_id>/', edit_reservation, name='edit_reservation'),
     path('delete_reservation/<int:booking_id>/', delete_reservation, name='delete_reservation'),
     path('review/<int:booking_id>/', make_a_review, name='review'),
-    path('review/<int:review_id>/', edit_review, name='edit_review'),
-    path('review/<int:review_id>/', delete_review, name='delete_review'),
+    path('edit_review/<int:booking_id>/', edit_review, name='edit_review'),
+    path('delete_review/<int:booking_id>/', delete_review, name='delete_review'),
 
 ]

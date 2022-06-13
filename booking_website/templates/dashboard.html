@@ -23,7 +23,7 @@
                         <svg class="bi pe-none me-2" height="16" width="16">
                             <use xlink:href="#speedometer2"/>
                         </svg>
-                        Bookings
+                        My Bookings
                     </a>
                 </li>
                 <li class="nav-item p-2">
@@ -31,14 +31,14 @@
                         <svg class="bi pe-none me-2" height="16" width="16">
                             <use xlink:href="#table"/>
                         </svg>
-                        Reviews
+                       My Reviews
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="col-10 vh-100 scroll d-flex align-items-start justify-content-flex-start"
-             style="overflow-y: auto; height: 700px; margin: 20px; border-radius: 10px;">
-            <div class="col-10">
+        <div class="col-8 vh-100 d-flex align-items-start justify-content-flex-start"
+             style="overflow-y: scroll; height: 700px; margin: 20px; border-radius: 10px;">
+            <div class="col-12">
                 {% if 'user_dashboard' in request.path %}
                 {% include 'profile_page.html' %}
                 {% elif 'restaurants' in request.path %}

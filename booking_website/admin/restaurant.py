@@ -14,7 +14,7 @@ class CSSAdminMixin(object):
 
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin, CSSAdminMixin):
-    list_display = ('name', 'description', 'image_html', 'restaurant_website_link', 'subscription_fee_level_string',)
+    list_display = ('name', 'description', 'image_html', 'restaurant_website_link', 'subscription_fee_level_string', 'restaurant_owner')
     readonly_fields = ('subscription_fee_level',)
 
     @admin.display(description='Image')
@@ -42,7 +42,6 @@ class RestaurantAdmin(admin.ModelAdmin, CSSAdminMixin):
 
         if not request.user.is_superuser:
             fields.remove('restaurant_owner')
-            fields.remove('tables')
         return fields
 
     def save_model(self, request, obj, form, change):
@@ -84,3 +83,11 @@ class RestaurantTableAdmin(admin.ModelAdmin):
             queryset = queryset.filter(restaurant_id=request.user.id)
 
         return queryset
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj=obj)
+
+        if not request.user.is_superuser:
+            fields.remove('booked')
+
+        return fields

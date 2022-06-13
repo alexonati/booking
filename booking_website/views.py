@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
-from booking_website.forms import RegisterForm, ProfileAvatarForm, MakeBookingForm, MakeReviewForm, EditReviewForm
-from booking_website.models import Restaurant, Booking, BookingReview, Table
+from booking_website.forms import RegisterForm, ProfileAvatarForm, MakeBookingForm
+from booking_website.models import Restaurant, Booking, Table
 
 
 def homepage(request):
@@ -79,17 +79,21 @@ def get_all_restaurants(request):
 
 def get_all_bookings(request):
     bookings = Booking.objects.all()
+    restaurants = Restaurant.objects.all()
 
     return render(request, 'dashboard.html', {
-        'bookings': bookings
+        'bookings': bookings,
+        'restaurants': restaurants
     })
 
 
 def get_all_reviews(request):
-    reviews = BookingReview.objects.all()
+    bookings = Booking.objects.all()
+    restaurants = Restaurant.objects.all()
 
     return render(request, 'dashboard.html', {
-        'reviews': reviews
+        'bookings': bookings,
+        'restaurants': restaurants
     })
 
 
@@ -162,51 +166,29 @@ def delete_reservation(request, booking_id):
 
 def make_a_review(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
-    form = MakeReviewForm(user=request.user, instance=booking)
 
     if request.method == 'POST':
-        form = MakeReviewForm(request.POST, user=request.user,
-                              instance=booking)
-
-        print('form.is_valid()', form.is_valid())
-        for field in form:
-            print("*****", field.name, field.errors, field.value())
-
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('reviews'))
-
-    return render(request, 'make_review_page.html', {
-        'form': form})
-
-
-def edit_review(request, review_id):
-    review = get_object_or_404(Booking, id=review_id)
-    form = EditReviewForm(instance=review)
-
-    if request.method == 'POST':
-
-        form = EditReviewForm(request.POST,
-                              instance=review)
-
-        print('form.is_valid()', form.is_valid())
-        for field in form:
-            print("*****", field.name, field.errors, field.value())
-
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('reviews'))
-
-    return render(request, 'make_review_page.html', {
-        'form': form})
-
-
-def delete_review(request, review_id):
-    review = get_object_or_404(Booking, id=review_id)
-
-    if request.method == 'POST':
-        review.delete()
+        booking.review = request.POST.get('content')
+        booking.save()
         return redirect(reverse('reviews'))
 
-    return render(request, 'delete_review.html', {
-        'review': review})
+    return render(request, 'make_review_page.html', {
+        'booking': booking})
+
+
+def edit_review(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    if request.method == 'POST':
+        booking.review = request.POST.get('content')
+        booking.save()
+        return redirect(reverse('reviews'))
+
+    return render(request, 'make_review_page.html', {
+        'booking': booking})
+
+
+def delete_review(request, booking_id):
+    Booking.objects.filter(id=booking_id).update(review=None)
+
+    return redirect(reverse('bookings'))

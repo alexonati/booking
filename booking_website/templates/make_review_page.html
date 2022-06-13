@@ -4,13 +4,24 @@
 {% block title %}Review Content {% endblock %}
 
 {% block content %}
-<div style="margin-left: 50px;">
- <br><br><br>
-    <h1>Review text</h1>
-    <br>
-    {% csrf_token %}
-    {% crispy form %}
-
-    <a class="btn btn-danger" href="{% url 'reviews' %}">Cancel</a>
-    </div>
+<div style="margin-left: 40px;">
+<br><br><br>
+<h1>Review Content</h1>
+<br>
+<form method="POST">
+   {% csrf_token %}
+   <div class="field">
+      <div class="control">
+         <textarea class="form-control" name="content" rows="3"></textarea>
+         <br>
+      </div>
+      <div class="field">
+         <div class="control">
+            <button class="btn btn-info btn-lg active">Submit</button>
+         </div>
+      </div>
+   </div>
+   </form>
+   <a class="btn btn-danger" href="{% url 'reviews' %}">Cancel</a>
+   </div>
 {% endblock %}

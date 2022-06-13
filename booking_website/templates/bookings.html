@@ -6,27 +6,28 @@
         <thead>
         <tr class="text-center">
             <th class="col-1" scope="col">Booking ID</th>
-            <th class="col-1" scope="col">Booking time</th>
-            <th class="col-1" scope="col">Booking date</th>
+            <th class="col-1" scope="col">Time</th>
+            <th class="col-1" scope="col">Date</th>
             <th class="col-1" scope="col">Restaurant</th>
             <th class="col-1" scope="col">Table</th>
             <th class="col-1" scope="col">Participants</th>
             <th class="col-1" scope="col">Fee Level</th>
             <th class="col-2" scope="col">Submit a Review</th>
-            <th class="col-1" scope="col">Edit Booking</th>
-            <th class="col-1" scope="col">Delete Booking</th>
+            <th class="col-2" scope="col">Edit Booking</th>
+            <th class="col-2" scope="col">Delete Booking</th>
         </tr>
         </thead>
         <tbody>
         {% for booking in bookings %}
         <tr class="align-middle text-center">
-            <td>{{booking.id}}</td>
-            <td>{{booking.time}}</td>
-            <td>{{booking.date}}</td>
-            <td>{{booking.restaurant}}</td>
-            <td>{{booking.table}}</td>
-            <td>{{booking.table.seats_number}}</td>
-            <td>{{booking.booking_fee_level}}</td>
+            <td>        <strong>{{booking.id}}</strong></td>
+            <td><strong>{{booking.time|time:"H:i"}}</strong></td>
+            <td><strong>{{booking.date|date:'d F Y'}}</strong></td>
+            <td><a  href="{{booking.restaurant.restaurant_website_link}}"><img src="{{booking.restaurant.image_url}}"
+                                                              style="width: 100px; height: 100px;"/></a></td>
+            <td><strong>{{booking.table}}</strong></td>
+            <td><strong>{{booking.table.seats_number}}</strong></td>
+            <td><strong>{{booking.booking_fee_level}}</strong></td>
             <td class="rounded align-middle">
                 <a class="btn btn-info btn-lg active" href="{% url 'review' booking_id=booking.pk  %}">Add Review</a>
             </td>
@@ -37,9 +38,8 @@
             <td class="rounded align-middle">
                 <a class="btn btn-danger btn-lg active" href="{% url 'delete_reservation' booking_id=booking.pk %}">Delete</a>
             </td>
-
         </tr>
-                    {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 </div>

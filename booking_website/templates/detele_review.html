@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Delete Booking page{% endblock %}
+{% block title %}Delete Review page{% endblock %}
 
 {% block content %}
 
-<h2 style="padding: 20px;">Are you sure you want to delete the review you made for the reservation at {{review.restaurant}} restaurant for the {{review.booking.date}} at {{review.booking.time}} ?</h2>
+<h2 style="padding: 20px;">Are you sure you want to delete the review you made for the reservation at {{booking.restaurant}} restaurant for the {{booking.date}} at {{booking.time}} ?</h2>
 
 <form class="form-control"  method="POST">
     {% csrf_token %}
     <input class="btn btn-primary" type="submit">
-    <a class="btn btn-danger" href="{% url 'bookings' %}">Cancel</a>
+    <a class="btn btn-danger" href="{% url 'reviews' %}">Cancel</a>
 </form>
 {% endblock %}

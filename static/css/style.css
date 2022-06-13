@@ -1,14 +1,18 @@
-body, html {
-    height: 100%;
-    overflow: hidden;
-  	padding-top: 24px;
-  	padding-bottom: 25px;
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+  display: none;
 }
 
-.scroll {
-    overflow: auto;
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+body, html {
     height: 100%;
-    padding: 0;
+  	padding-top: 24px;
+  	padding-bottom: 25px;
 }
 
 .header {
@@ -65,4 +69,9 @@ video {
 .book {
     font-size: 24px;
     padding: 14px 40px;
+}
+
+
+.asteriskField {
+    display: none;
 }
