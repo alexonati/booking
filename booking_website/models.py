@@ -1,12 +1,15 @@
 from django.conf import global_settings, settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
 from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
+
+
 class Booking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateField(default=None, blank=False, null=False)
@@ -32,6 +35,12 @@ class Booking(models.Model):
 
     def __str__(self):
         return f'Booking {self.id}'
+
+    @property
+    def QR_code_image(self):
+        if self.QR_code:
+            return self.QR_code.url
+        return static('..\static\images\defaultProductImage.png')
 
 
 class RestaurantFees(models.Model):
@@ -75,7 +84,8 @@ class Table(models.Model):
                                    default=None,
                                    blank=True,
                                    related_name='tables')
-    seats_number = models.IntegerField(null=False)
+    seats_number = models.PositiveIntegerField(null=False, default=1,
+                                               validators=[MaxValueValidator(20), MinValueValidator(1)])
     booked = models.BooleanField(default=False)
 
     def __str__(self):

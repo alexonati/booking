@@ -28,6 +28,9 @@
             <td><strong>{{booking.table}}</strong></td>
             <td><strong>{{booking.table.seats_number}}</strong></td>
             <td><strong>{{booking.booking_fee_level}}</strong></td>
+            <td class="rounded align-middle text-center"><a href="{{booking.restaurant.restaurant_website_link}}"><img
+                    src="{{booking.QR_code_image}}"
+                    style="width: 100px; height: 100px;"/></a></td>
             <td class="rounded align-middle">
                 <a class="btn btn-info btn-lg active" href="{% url 'review' booking_id=booking.pk  %}">Add Review</a>
             </td>

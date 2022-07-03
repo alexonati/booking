@@ -46,7 +46,7 @@ class RestaurantAdmin(admin.ModelAdmin, CSSAdminMixin):
 
     def save_model(self, request, obj, form, change):
         if not request.user.is_superuser and obj.pk is None:
-            obj.restaurant_owner_id = request.user.id
+            obj.restaurant_owner = request.user.id
 
         super().save_model(request, obj, form, change)
 
@@ -80,7 +80,7 @@ class RestaurantTableAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)
 
         if not request.user.is_superuser:
-            queryset = queryset.filter(restaurant_id=request.user.id)
+            queryset = queryset.filter(restaurant=request.user.pk)
 
         return queryset
 
@@ -91,3 +91,8 @@ class RestaurantTableAdmin(admin.ModelAdmin):
             fields.remove('booked')
 
         return fields
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "restaurant":
+            kwargs["queryset"] = Restaurant.objects.filter(restaurant_owner=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)

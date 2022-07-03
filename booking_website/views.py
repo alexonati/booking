@@ -1,4 +1,5 @@
 # Create your views here.
+from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -12,6 +13,8 @@ def homepage(request):
 
 
 def login_or_register_view(request):
+    # check if user.is_authenticated & if yes, redirect to user_dashboard.html
+    # if not, render the below page
     return render(request, 'login_or_register_view.html')
 
 
@@ -71,9 +74,14 @@ def get_all_restaurants(request):
     restaurants = Restaurant.objects.all()
     tables = Table.objects.all()
 
+    tables_paginator = Paginator(tables, 5)
+    tables_page_obj = request.GET.get('page', 1)
+    tables_page = tables_paginator.get_page(tables_page_obj)
+
     return render(request, 'dashboard.html', {
         'restaurants': restaurants,
-        'tables': tables,
+        'restaurant_tables': tables,
+        'tables': tables_page,
     })
 
 
@@ -114,15 +122,16 @@ def make_a_reservation(request, restaurant_id, table_id):
     else:
         form = MakeBookingForm(request.POST, user=request.user, restaurant=restaurant, table=table)
 
-        # **** USED FOR DEBUG ****
-        print('form.is_valid()', form.is_valid())
-        for field in form:
-            print("*****", field.name, field.errors, field.value())
+        # # **** USED FOR DEBUG ****
+        # print('form.is_valid()', form.is_valid())
+        # for field in form:
+        #     print("*****", field.name, field.errors, field.value())
 
         if form.is_valid():
             form.save()
             table.booked = True
             table.save()
+
             return redirect(reverse('bookings'))
 
     return render(request, 'make_reservation_page.html', {

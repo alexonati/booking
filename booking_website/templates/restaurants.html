@@ -29,5 +29,19 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        <p>
+        Page {{ tables.number }} / {{ tables.paginator.num_pages }} |
+        <a href="{% url 'restaurants' %}?page=1">First page</a> |
+        {% if tables.has_previous %}
+            <a href="{% url 'restaurants' %}?page={{ tables.previous_page_number }}">Previous page</a>
+            |
+        {% endif %}
+        {% if tables.has_next %}
+            <a href="{% url 'restaurants' %}?page={{ tables.next_page_number }}">Next page</a> |
+        {% endif %}
+        <a href="{% url 'restaurants' %}?page={{ tables.paginator.num_pages }}">Last page</a>
+    </p>
+    </div>
 </div>
 {% endblock %}
