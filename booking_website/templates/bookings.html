@@ -18,7 +18,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for booking in bookings %}
+        {% for booking in bookings_page %}
         <tr class="align-middle text-center">
             <td>        <strong>{{booking.id}}</strong></td>
             <td><strong>{{booking.time|time:"H:i"}}</strong></td>
@@ -45,5 +45,19 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        <p>
+            Page {{ bookings_page.number }} / {{ bookings_page.paginator.num_pages }} |
+            <a href="{% url 'bookings' %}?page=1">First page</a> |
+            {% if bookings_page.has_previous %}
+            <a href="{% url 'bookings' %}?page={{ bookings_page.previous_page_number }}">Previous page</a>
+            |
+            {% endif %}
+            {% if bookings_page.has_next %}
+            <a href="{% url 'bookings' %}?page={{ bookings_page.next_page_number }}">Next page</a> |
+            {% endif %}
+            <a href="{% url 'bookings' %}?page={{ bookings_page.paginator.num_pages }}">Last page</a>
+        </p>
+    </div>
 </div>
 {% endblock %}

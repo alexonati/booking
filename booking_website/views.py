@@ -79,19 +79,21 @@ def get_all_restaurants(request):
     tables_page = tables_paginator.get_page(tables_page_obj)
 
     return render(request, 'dashboard.html', {
+        'tables_page': tables_page,
         'restaurants': restaurants,
-        'restaurant_tables': tables,
-        'tables': tables_page,
     })
 
 
 def get_all_bookings(request):
     bookings = Booking.objects.all()
-    restaurants = Restaurant.objects.all()
+
+    bookings_paginator = Paginator(bookings, 5)
+    bookings_page_obj = request.GET.get('page', 1)
+    bookings_page = bookings_paginator.get_page(bookings_page_obj)
 
     return render(request, 'dashboard.html', {
-        'bookings': bookings,
-        'restaurants': restaurants
+
+        'bookings_page' : bookings_page
     })
 
 
@@ -99,9 +101,13 @@ def get_all_reviews(request):
     bookings = Booking.objects.all()
     restaurants = Restaurant.objects.all()
 
+    reviews_paginator = Paginator(bookings, 5)
+    reviews_page_obj = request.GET.get('page', 1)
+    reviews_page = reviews_paginator.get_page(reviews_page_obj)
+
     return render(request, 'dashboard.html', {
+        'reviews_page': reviews_page,
         'bookings': bookings,
-        'restaurants': restaurants
     })
 
 

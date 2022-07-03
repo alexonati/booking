@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for booking in bookings %}
+        {% for booking in reviews_page %}
         {% if booking.review is not None %}
         <tr class="align-middle text-center">
             <td><strong>{{booking.id}}</strong></td>
@@ -32,5 +32,19 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        <p>
+            Page {{ reviews_page.number }} / {{ reviews_page.paginator.num_pages }} |
+            <a href="{% url 'reviews' %}?page=1">First page</a> |
+            {% if reviews_page.has_previous %}
+            <a href="{% url 'reviews' %}?page={{ reviews_page.previous_page_number }}">Previous page</a>
+            |
+            {% endif %}
+            {% if reviews_page.has_next %}
+            <a href="{% url 'reviews' %}?page={{ reviews_page.next_page_number }}">Next page</a> |
+            {% endif %}
+            <a href="{% url 'reviews' %}?page={{ reviews_page.paginator.num_pages }}">Last page</a>
+        </p>
+    </div>
 </div>
 {% endblock %}

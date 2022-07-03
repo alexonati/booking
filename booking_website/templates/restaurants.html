@@ -17,11 +17,13 @@
         {% if table.booked == False %}
         <tr class="rounded">
             <td class="rounded align-middle text-center"><strong>{{restaurant.name}}</strong></td>
-            <td class="rounded align-middle text-center"><a  href="{{restaurant.restaurant_website_link}}"><img src="{{restaurant.image_url}}"
-                                                              style="width: 100px; height: 100px;"/></a></td>
+            <td class="rounded align-middle text-center"><a href="{{restaurant.restaurant_website_link}}"><img
+                    src="{{restaurant.image_url}}"
+                    style="width: 100px; height: 100px;"/></a></td>
             <td class="rounded align-middle text-center"><strong>{{table.seats_number}}</strong></td>
             <td class="rounded align-middle text-center">
-                <a class="btn btn-info btn-lg active" href="{% url 'reservation' restaurant_id=restaurant.id table_id=table.id %}">Reserve it</a>
+                <a class="btn btn-info btn-lg active"
+                   href="{% url 'reservation' restaurant_id=restaurant.id table_id=table.id %}">Reserve it</a>
             </td>
         </tr>
         {% endif %}
@@ -31,17 +33,17 @@
     </table>
     <div class="d-flex justify-content-center">
         <p>
-        Page {{ tables.number }} / {{ tables.paginator.num_pages }} |
-        <a href="{% url 'restaurants' %}?page=1">First page</a> |
-        {% if tables.has_previous %}
-            <a href="{% url 'restaurants' %}?page={{ tables.previous_page_number }}">Previous page</a>
+            Page {{ tables_page.number }} / {{ tables_page.paginator.num_pages }} |
+            <a href="{% url 'restaurants' %}?page=1">First page</a> |
+            {% if tables_page.has_previous %}
+            <a href="{% url 'restaurants' %}?page={{ tables_page.previous_page_number }}">Previous page</a>
             |
-        {% endif %}
-        {% if tables.has_next %}
-            <a href="{% url 'restaurants' %}?page={{ tables.next_page_number }}">Next page</a> |
-        {% endif %}
-        <a href="{% url 'restaurants' %}?page={{ tables.paginator.num_pages }}">Last page</a>
-    </p>
+            {% endif %}
+            {% if tables_page.has_next %}
+            <a href="{% url 'restaurants' %}?page={{ tables_page.next_page_number }}">Next page</a> |
+            {% endif %}
+            <a href="{% url 'restaurants' %}?page={{ tables_page.paginator.num_pages }}">Last page</a>
+        </p>
     </div>
 </div>
 {% endblock %}
