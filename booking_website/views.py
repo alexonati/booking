@@ -1,10 +1,14 @@
 # Create your views here.
+import os
+from django.conf import settings
+from qrcode import make
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
-from booking_website.forms import RegisterForm, ProfileAvatarForm, MakeBookingForm
+from booking_website.forms import RegisterForm, ProfileAvatarForm, MakeBookingForm, SearchAndFilterForm
 from booking_website.models import Restaurant, Booking, Table
 
 
@@ -74,6 +78,12 @@ def get_all_restaurants(request):
     restaurants = Restaurant.objects.all()
     tables = Table.objects.all()
 
+    filter_form = SearchAndFilterForm(request.GET)
+    if filter_form.is_valid():
+        restaurants = filter_form.get_results()
+    else:
+        raise Http404('Search and filter form is invalid!')
+
     tables_paginator = Paginator(tables, 5)
     tables_page_obj = request.GET.get('page', 1)
     tables_page = tables_paginator.get_page(tables_page_obj)
@@ -81,6 +91,7 @@ def get_all_restaurants(request):
     return render(request, 'dashboard.html', {
         'tables_page': tables_page,
         'restaurants': restaurants,
+        "filter_form": filter_form,
     })
 
 
@@ -135,6 +146,11 @@ def make_a_reservation(request, restaurant_id, table_id):
 
         if form.is_valid():
             form.save()
+            booking = form.save()
+            img = make(booking.pk)
+            img_name = f'booking_{booking.pk}.png'
+            img.save(settings.MEDIA_ROOT + '/booking_website/' + img_name)
+            booking.QR_code_image = str(settings.MEDIA_ROOT + '/booking_website/' + img_name)
             table.booked = True
             table.save()
 
@@ -159,6 +175,11 @@ def edit_reservation(request, booking_id):
 
         if form.is_valid():
             form.save()
+            booking = form.save()
+            img = make(booking.pk)
+            img_name = f'booking_{booking.pk}.png'
+            booking.QR_code_image = f'booking_{booking.pk}.png'
+            img.save(settings.MEDIA_ROOT + 'booking_website/bookings' + img_name)
             return redirect(reverse('bookings'))
 
     return render(request, 'make_reservation_page.html', {
@@ -171,6 +192,9 @@ def delete_reservation(request, booking_id):
 
     if request.method == 'POST':
         booking.delete()
+        path = f'booking_{booking.pk}.png'
+        if os.path.isfile(path):
+            os.remove(path)
         table.booked = False
         table.save()
         return redirect(reverse('bookings'))

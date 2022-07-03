@@ -1,4 +1,3 @@
-import pyqrcode
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 from django import forms
@@ -6,7 +5,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
 from django.urls import reverse_lazy
 
-from booking_website.models import Profile, Booking
+
+from booking_website.models import Profile, Booking, Restaurant, Table
 
 AuthUser = get_user_model()
 
@@ -105,7 +105,7 @@ class MakeBookingForm(forms.ModelForm):
         self.fields['restaurant'].required = False
         self.fields['table'].required = False
         self.fields['booking_fee_level'].required = False
-        self.fields['QR_code'].required = False
+        self.fields['QR_code_image'].required = False
 
     def save(self, commit=True):
         booking = super().save(commit=False)
@@ -139,3 +139,15 @@ class MakeBookingForm(forms.ModelForm):
     )
 
 
+class SearchAndFilterForm(forms.Form):
+    restaurant_name = forms.CharField(max_length=255, required=False)
+
+    def get_results(self):
+        restaurant_name = self.cleaned_data.get('restaurant_name')
+
+        if restaurant_name:
+            restaurants = Restaurant.objects.filter(name__icontains=restaurant_name)
+        else:
+            restaurants = Restaurant.objects.all()
+
+        return restaurants

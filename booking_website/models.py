@@ -31,16 +31,10 @@ class Booking(models.Model):
                                           default=1,
                                           blank=True,
                                           related_name='bookingfee')
-    QR_code = models.ImageField(null=True, blank=True)
+    QR_code_image = models.TextField(default=None, blank=True, null=True)
 
     def __str__(self):
         return f'Booking {self.id}'
-
-    @property
-    def QR_code_image(self):
-        if self.QR_code:
-            return self.QR_code.url
-        return static('..\static\images\defaultProductImage.png')
 
 
 class RestaurantFees(models.Model):
