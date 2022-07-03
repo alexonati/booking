@@ -96,7 +96,7 @@ def get_all_restaurants(request):
 
 
 def get_all_bookings(request):
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.get_queryset().order_by('date')
 
     bookings_paginator = Paginator(bookings, 5)
     bookings_page_obj = request.GET.get('page', 1)
@@ -109,7 +109,7 @@ def get_all_bookings(request):
 
 
 def get_all_reviews(request):
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.get_queryset().order_by('date')
     restaurants = Restaurant.objects.all()
 
     reviews_paginator = Paginator(bookings, 5)
