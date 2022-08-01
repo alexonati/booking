@@ -1,3 +1,3 @@
 # Django Restaurant Booking webapp project:
 
-![ Alt text](website.mp4)
+![ Alt text](website.gif)
